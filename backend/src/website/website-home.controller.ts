@@ -44,24 +44,22 @@ export class WebsiteHomeController {
 
     return {
       profile: {
-        name: profile?.name,
-        title: profile?.title,
-        bio: profile?.bio,
-        introText: profile?.introText,
-        profileImage: profile?.profileImage,
-        avatar: profile?.avatar,
+        name: profile?.hero ? `${profile.hero.firstName} ${profile.hero.lastName}` : 'Saeed Sekka',
+        title: profile?.hero?.aboutMe || 'Professional Photographer',
+        bio: profile?.hero?.aboutMe,
+        introText: profile?.hero?.aboutMe,
+        profileImage: profile?.hero?.profileImage,
+        avatar: profile?.hero?.profileImage,
         stats: profile?.stats,
         socialMedia: profile?.socialMedia,
         ctaButtons: profile?.ctaButtons,
-        moreAboutMe: profile?.moreAboutMe,
-        brandsWorkedWith: profile?.brandsWorkedWith,
-        phone: profile?.phone,
-        email: profile?.email,
-        address: profile?.address,
-        location: profile?.location,
+        phone: profile?.hero?.phone,
+        email: profile?.hero?.phone, // Using phone as email for now
+        address: profile?.hero?.address,
+        location: profile?.hero?.address,
       },
-      services: profile?.services || [],
-      experience: profile?.experience?.slice(0, 4) || [], // Show latest 4 positions
+      services: profile?.services?.services || [],
+      experience: profile?.experience?.experience?.slice(0, 4) || [], // Show latest 4 positions
       albums: featuredAlbums,
       reviews: featuredReviews,
       stats: {
@@ -88,11 +86,11 @@ export class WebsiteHomeController {
     const profile = await this.profileService.findActive();
 
     return {
-      hoursExperience: getStat(profile?.stats, 'hoursExperience', 15000),
-      yearsExperience: getStat(profile?.stats, 'yearsExperience', 14),
-      awards: getStat(profile?.stats, 'awards', 25),
-      happyClients: getStat(profile?.stats, 'happyClients', 200),
-      projectsCompleted: getStat(profile?.stats, 'projectsCompleted', albumStats?.totalAlbums || 0),
+      hoursExperience: getStat(profile?.stats?.statsValues, 'hoursExperience', 15000),
+      yearsExperience: getStat(profile?.stats?.statsValues, 'yearsExperience', 14),
+      awards: getStat(profile?.stats?.statsValues, 'awards', 25),
+      happyClients: getStat(profile?.stats?.statsValues, 'happyClients', 200),
+      projectsCompleted: getStat(profile?.stats?.statsValues, 'projectsCompleted', albumStats?.totalAlbums || 0),
       totalAlbums: albumStats?.totalAlbums || 0,
       totalReviews: reviewStats?.totalReviews || 0,
       averageRating: reviewStats?.averageRating || 0,

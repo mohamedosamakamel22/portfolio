@@ -3,302 +3,243 @@ import { Document, Schema as MongooseSchema } from 'mongoose';
 
 export type ProfileDocument = Profile & Document;
 
-@Schema({ timestamps: true })
-export class Profile {
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User', required: true })
-  userId: MongooseSchema.Types.ObjectId;
+// Interface for hero section
+export interface HeroSection {
+    firstName: string;
+    lastName: string;
+    phone: string;
+    address: string;
+    profileImage: string;
+    coverImage: string;
+    aboutMe: string;
+    isActive: boolean;
+    specialties: string[];
+}
 
-  @Prop({ required: true })
-  name: string;
-
-  @Prop({ required: true })
-  title: string;
-
-  @Prop({ required: true })
-  bio: string;
-
-  @Prop({ required: true })
-  email: string;
-
-  @Prop({ required: true })
-  phone: string;
-
-  @Prop({ required: true })
-  address: string;
-
-  @Prop()
-  profileImage: string;
-
-  @Prop()
-  whatsapp: string;
-
-  @Prop()
-  website: string;
-
-  @Prop()
-  avatar: string;
-
-  @Prop()
-  coverImage: string;
-
-  // YouTube video integration
-  @Prop({ type: Object })
-  youtubeVideo: {
+// Interface for YouTube video
+export interface YouTubeVideo {
     videoId: string;
     title: string;
     description: string;
     thumbnail: string;
     embedUrl: string;
-  };
+}
 
-  @Prop([Object])
-  stats: Array<{
+// Interface for stats
+export interface Stat {
+    title: string;
+    subtitle: string;
     key: string;
     value: string | number;
-  }>;
+    order: number;
+}
 
-  @Prop([String])
-  specialties: string[];
 
-  @Prop([String])
-  services: string[];
+export interface ISocialMedia {
+    isActive: boolean;
+    socialMedia: SocialMedia[];
+}
+export interface SocialMedia {
+    icon: string;
+    url: string;
+    title: string;
+    order: number;
+}
 
-  @Prop({ type: Object })
-  pricing: {
-    portraitSessions?: number;
-    eventPhotography?: number;
-    commercialRates?: string;
-    weddingPackage?: any;
-    portraitSession?: any;
-    eventCoverage?: any;
-  };
+// Interface for CTA buttons
+export interface CTAButton {
+    text: string;
+    url: string;
+    type: string;
+}
 
-  // Enhanced social media with full URLs
-  @Prop({ type: Object })
-  socialMedia: {
-    instagram?: {
-      handle: string;
-      url: string;
-      followers?: string;
-    };
-    facebook?: {
-      handle: string;
-      url: string;
-      followers?: string;
-    };
-    twitter?: {
-      handle: string;
-      url: string;
-      followers?: string;
-    };
-    linkedin?: {
-      handle: string;
-      url: string;
-      followers?: string;
-    };
-    youtube?: {
-      handle: string;
-      url: string;
-      subscribers?: string;
-    };
-    tiktok?: {
-      handle: string;
-      url: string;
-      followers?: string;
-    };
-  };
+export interface CTAButtons {
+    primary?: CTAButton;
+    secondary?: CTAButton;
+    whatsapp?: CTAButton;
+    call?: CTAButton;
+}
 
-  // Call-to-action buttons with text
-  @Prop({ type: Object })
-  ctaButtons: {
-    primary?: {
-      text: string;
-      url: string;
-      type: string;
-    };
-    secondary?: {
-      text: string;
-      url: string;
-      type: string;
-    };
-    whatsapp?: {
-      text: string;
-      url: string;
-      type: string;
-    };
-    call?: {
-      text: string;
-      url: string;
-      type: string;
-    };
-  };
-
-  @Prop([Object])
-  experience: Array<{
+// Interface for experience
+export interface Experience {
     company: string;
     position: string;
     startDate: Date;
-    endDate?: Date; // Optional for current positions
-    isPresent?: boolean; // True if still working there
+    endDate?: Date;
+    isPresent?: boolean;
     description: string;
-    achievements?: string[];
-    location?: string;
-    employmentType?: string; // Full-time, Part-time, Contract, Freelance
-  }>;
+    order: number;
+}
 
-  @Prop([Object])
-  brands: Array<{
+// Interface for brands
+export interface Brand {
     name: string;
     logo?: string;
-  }>;
+    order: number;
+}
 
-  // Enhanced FAQ with rich content support
-  @Prop([Object])
-  faq: Array<{
+
+export interface FAQ {
     question: string;
-    answer?: string; // Simple text answer
-    content?: {
-      title?: string;
-      subtitle?: string;
-      description?: string;
-      body?: Array<{
-        type: 'text' | 'list' | 'highlight' | 'separator';
-        content?: string;
-        items?: Array<{
-          text: string;
-          prefix?: string; // '+', '-', '•', numbers, etc.
-        }>;
-        style?: {
-          bold?: boolean;
-          italic?: boolean;
-          color?: string;
-          size?: string;
-        };
-        html?: string; // For custom HTML styling
-      }>;
-    };
-    icon?: string;
-    category?: string;
-    order?: number;
-    isVisible?: boolean;
-  }>;
+    answer: string;
+    order: number;
+}
 
-  @Prop([String])
-  languages: string[];
-
-  @Prop({ type: Object })
-  availability: {
+// Interface for availability
+export interface Availability {
     weekdays?: boolean;
     weekends?: boolean;
     holidays?: boolean;
     bookingAdvance?: string;
-  };
+}
 
-  @Prop()
-  location: string;
-
-  @Prop()
-  travelRadius: string;
-
-  @Prop({ default: false })
-  destinationWeddings: boolean;
-
-  @Prop({ default: true })
-  isActive: boolean;
-
-  // Additional intro text for "crafting moments and capturing stories through the lens"
-  @Prop()
-  introText: string;
-
-  // More About Me button configuration
-  @Prop({ type: Object })
-  moreAboutMe: {
+// Interface for more about me
+export interface MoreAboutMe {
     text: string;
     url: string;
     enabled: boolean;
-  };
+}
 
-  // Brands worked with - array of brand icons/logos
-  @Prop([Object])
-  brandsWorkedWith: Array<{
+// Interface for brands worked with
+export interface BrandWorkedWith {
     name: string;
-    icon: string; // Icon name, URL, or emoji
-    url?: string; // Optional brand website
+    icon: string;
+    url?: string;
     order?: number;
-  }>;
+}
 
-  // Gear and Equipment - matching website structure
-  @Prop({ type: Object })
-  gear: {
-    cameras?: Array<{
-      name: string;
-      model: string;
-      image?: string;
-      description?: string;
-      order?: number;
-    }>;
-    lenses?: Array<{
-      name: string;
-      model: string;
-      image?: string;
-      description?: string;
-      order?: number;
-    }>;
-    accessories?: Array<{
-      name: string;
-      model: string;
-      image?: string;
-      description?: string;
-      category?: string; // e.g., "Lighting", "Tripods", "Storage"
-      order?: number;
-    }>;
-    editingTools?: Array<{
-      name: string;
-      model: string;
-      image?: string;
-      description?: string;
-      category?: string; // e.g., "Software", "Hardware"
-      order?: number;
-    }>;
-  };
+// Interface for gear items
+export interface GearItem {
+    name: string;
+    model: string;
+    image?: string;
+    description?: string;
+    category?: string;
+    order?: number;
+}
 
-  // What clients will find - matching website structure
-  @Prop([Object])
-  clientBenefits: Array<{
+// Interface for gear
+export interface Gear {
+    cameras?: GearItem[];
+    lenses?: GearItem[];
+    accessories?: GearItem[];
+    editingTools?: GearItem[];
+}
+
+// Interface for client benefits
+export interface ClientBenefit {
     title: string;
     description: string;
     icon?: string;
     order?: number;
-  }>;
+}
 
-  // Detailed About Me sections
-  @Prop()
-  detailedBio: string; // More comprehensive bio text
-
-  @Prop()
-  photographyJourney: string; // Story about how they got into photography
-
-  // Call-to-action text from website
-  @Prop()
-  callToAction: string;
-
-  // Book a session button configuration
-  @Prop({ type: Object })
-  bookSessionButton: {
+// Interface for book session button
+export interface BookSessionButton {
     text: string;
     url: string;
     enabled: boolean;
     style?: string;
     icon?: string;
-  };
+}
 
-  @Prop([Object])
-  workApproach: Array<{
+// Interface for work approach
+export interface WorkApproach {
     title: string;
     description: string;
     icon?: string;
     order?: number;
-  }>;
+}
+
+export interface IStats {
+    title: string;
+    subtitle: string;
+    statsValues: Stat[];
+    isActive: boolean;
+}
+
+export interface IBio {
+    title: string;
+    description: string;
+    isActive: boolean;
+    button: {
+        text: string;
+        url: string;
+        enabled: boolean;
+    }
+}
+
+export interface IBrands {
+    title: string;
+    subtitle: string;
+    brands: Brand[];
+    isActive: boolean;
+}
+
+export interface IExperience {
+    title: string;
+    subtitle: string;
+    experience: Experience[];
+    isActive: boolean;
+}
+
+export interface IService {
+    title: string;
+    subtitle: string;
+    services: Service[];
+    isActive: boolean;
+}
+
+export interface Service {
+    title: string;
+    description: string;
+    order: number;
+}
+
+export interface IFaq {
+    title: string;
+    subtitle: string;
+    faq: FAQ[];
+    isActive: boolean;
+}
+
+@Schema({ timestamps: true })
+export class Profile {
+    @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User', required: true })
+    userId: MongooseSchema.Types.ObjectId;
+    // YouTube video integration
+    @Prop({ type: Object })
+    youtubeVideo: YouTubeVideo;
+
+    @Prop({ type: Object, required: true })
+    hero: HeroSection;
+
+
+    @Prop({ type: Object })
+    stats: IStats;
+
+    @Prop({ type: Object })
+    bio: IBio;
+
+    @Prop({ type: Object })
+    brands: IBrands;
+
+    @Prop({ type: Object })
+    experience: IExperience;
+
+    @Prop({ type: Object })
+    services: IService;
+
+    @Prop({ type: Object })
+    faq: IFaq;
+
+    // Enhanced social media with full URLs
+    @Prop({ type: Object })
+    socialMedia: ISocialMedia;
+
+    // Call-to-action buttons with text
+    @Prop({ type: Object })
+    ctaButtons: CTAButtons;
 }
 
 export const ProfileSchema = SchemaFactory.createForClass(Profile); 

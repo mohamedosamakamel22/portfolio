@@ -6,7 +6,9 @@ import { getStat } from '../common/utils/stats.helper';
 @ApiTags('Website - About Page')
 @Controller('website/about')
 export class WebsiteAboutController {
-  constructor(private readonly profileService: ProfileService) {}
+  constructor(
+    private readonly profileService: ProfileService,
+  ) {}
 
   @Get()
   @ApiOperation({ 
@@ -15,88 +17,55 @@ export class WebsiteAboutController {
   })
   async getAboutPageData() {
     const profile = await this.profileService.findActive();
-    
-    if (!profile) {
-      return {
-        message: 'Profile not found',
-        data: null
-      };
-    }
 
     return {
-      // Basic Information
-      name: profile.name,
-      title: profile.title,
-      bio: profile.bio,
-      detailedBio: profile.detailedBio,
-      photographyJourney: profile.photographyJourney,
-      callToAction: profile.callToAction,
-      bookSessionButton: profile.bookSessionButton,
-      introText: profile.introText,
+      // Basic profile info
+      name: profile?.hero ? `${profile.hero.firstName} ${profile.hero.lastName}` : 'Saeed Sekka',
+      title: profile?.hero?.aboutMe || 'Professional Photographer',
+      bio: profile?.hero?.aboutMe,
+      detailedBio: profile?.hero?.aboutMe,
+      photographyJourney: profile?.hero?.aboutMe,
+      callToAction: profile?.hero?.aboutMe,
+      bookSessionButton: profile?.ctaButtons?.primary,
+      introText: profile?.hero?.aboutMe,
       
-      // Images
-      profileImage: profile.profileImage,
-      avatar: profile.avatar,
-      coverImage: profile.coverImage,
+      // Contact info
+      profileImage: profile?.hero?.profileImage,
+      avatar: profile?.hero?.profileImage,
+      coverImage: profile?.hero?.coverImage,
       
-      // Contact Information
-      email: profile.email,
-      phone: profile.phone,
-      whatsapp: profile.whatsapp,
-      address: profile.address,
-      location: profile.location,
-      website: profile.website,
+      // Contact details
+      email: profile?.hero?.phone, // Using phone as email for now
+      phone: profile?.hero?.phone,
+      whatsapp: profile?.hero?.phone,
+      address: profile?.hero?.address,
+      location: profile?.hero?.address,
+      website: 'https://saeedseka.framer.website/',
       
-      // Professional Experience
-      experience: profile.experience || [],
+      // Professional info
+      specialties: profile?.hero?.specialties || [],
+      clientBenefits: [], // Not in new schema
+      workApproach: [], // Not in new schema
       
-      // Services and Skills
-      services: profile.services || [],
-      specialties: profile.specialties || [],
-      
-      // What clients will find
-      clientBenefits: profile.clientBenefits || [],
-      workApproach: profile.workApproach || [],
-      
-      // Comprehensive Gear Information
+      // Gear information (not in new schema)
       gear: {
-        cameras: profile.gear?.cameras || [],
-        lenses: profile.gear?.lenses || [],
-        accessories: profile.gear?.accessories || [],
-        editingTools: profile.gear?.editingTools || []
+        cameras: [],
+        lenses: [],
+        accessories: [],
+        editingTools: []
       },
       
-      // Statistics
-      stats: profile.stats || [
-        { key: 'hoursExperience', value: 15000 },
-        { key: 'yearsExperience', value: 14 },
-        { key: 'awards', value: 25 },
-        { key: 'happyClients', value: 200 },
-        { key: 'projectsCompleted', value: 500 }
-      ],
+      // Experience and brands
+      experience: profile?.experience?.experience || [],
+      brandsWorkedWith: profile?.brands?.brands || [],
       
-      // Social Media
-      socialMedia: profile.socialMedia || {},
+      // Additional info (not in new schema)
+      moreAboutMe: {},
+      languages: [],
+      availability: {},
       
-      // Brands worked with
-      brandsWorkedWith: profile.brandsWorkedWith || [],
-      
-      // Call-to-action buttons
-      ctaButtons: profile.ctaButtons || {},
-      moreAboutMe: profile.moreAboutMe || {},
-      
-      // FAQ for about page
-      faq: profile.faq || [],
-      
-      // Additional info
-      languages: profile.languages || [],
-      availability: profile.availability || {},
-      
-      // YouTube video if available
-      youtubeVideo: profile.youtubeVideo || null,
-      
-      // Pricing information (if public)
-      pricing: profile.pricing || null,
+      // Pricing information (not in new schema)
+      pricing: null,
     };
   }
 
@@ -104,24 +73,26 @@ export class WebsiteAboutController {
   @ApiOperation({ summary: 'Get gear information only (public)' })
   async getGearInfo() {
     const profile = await this.profileService.findActive();
-    
+
     return {
-      cameras: profile?.gear?.cameras || [],
-      lenses: profile?.gear?.lenses || [],
-      accessories: profile?.gear?.accessories || [],
-      editingTools: profile?.gear?.editingTools || []
+      cameras: [],
+      lenses: [],
+      accessories: [],
+      editingTools: []
     };
   }
 
-  @Get('experience')
-  @ApiOperation({ summary: 'Get professional experience only (public)' })
-  async getExperience() {
+  @Get('stats')
+  @ApiOperation({ summary: 'Get about page statistics (public)' })
+  async getStats() {
     const profile = await this.profileService.findActive();
-    
+
     return {
-      experience: profile?.experience || [],
-      totalYears: getStat(profile?.stats, 'yearsExperience', 14),
-      currentPosition: profile?.experience?.find(exp => exp.isPresent) || null
+      totalYears: getStat(profile?.stats?.statsValues, 'yearsExperience', 14),
+      currentPosition: profile?.experience?.experience?.find(exp => exp.isPresent) || null,
+      totalProjects: getStat(profile?.stats?.statsValues, 'projectsCompleted', 500),
+      happyClients: getStat(profile?.stats?.statsValues, 'happyClients', 200),
+      awards: getStat(profile?.stats?.statsValues, 'awards', 25),
     };
   }
 
@@ -129,11 +100,10 @@ export class WebsiteAboutController {
   @ApiOperation({ summary: 'Get client benefits and work approach (public)' })
   async getClientBenefits() {
     const profile = await this.profileService.findActive();
-    
+
     return {
-      clientBenefits: profile?.clientBenefits || [],
-      workApproach: profile?.workApproach || [],
-      services: profile?.services || []
+      clientBenefits: [],
+      workApproach: [],
     };
   }
 } 

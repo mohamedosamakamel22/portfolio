@@ -22,119 +22,156 @@ export class SeedService {
   async seedProfile() {
     try {
       const profileData = {
-        name: 'Saeed Sekka',
-        title: 'Professional Photographer',
-        bio: 'I am a passionate photographer dedicated to capturing life\'s most precious moments. With a keen eye for detail and a love for storytelling, I strive to create images that are not just beautiful, but that also evoke emotion and tell a compelling story.',
-        email: 'SaeedSekka@email.com',
-        phone: '+966-53-868-3923',
-        address: 'Riyadh, Saudi Arabia',
-        stats: [
-          { key: 'hoursExperience', value: 5000 },
-          { key: 'yearsExperience', value: 12 },
-          { key: 'awards', value: 15 },
-          { key: 'happyClients', value: 200 },
-        ],
-        specialties: ['Photography', 'Photo Editing', 'Designer'],
-        services: [
-          'Event Photography',
-          'Aerial Photography',
-          'Corporate Photography',
-          'Editorial Photography',
-          'Portrait Photography',
-          'Product Photography'
-        ],
-        pricing: {
-          portraitSessions: 200,
-          eventPhotography: 500,
-          commercialRates: 'Customized based on project scope',
+        hero: {
+          firstName: 'Saeed',
+          lastName: 'Sekka',
+          phone: '+966-53-868-3923',
+          address: 'Riyadh, Saudi Arabia',
+          profileImage: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/profile/saeed-main.jpg',
+          coverImage: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/cover/saeed-cover.jpg',
+          aboutMe: 'I am a passionate photographer dedicated to capturing life\'s most precious moments. With a keen eye for detail and a love for storytelling, I strive to create images that are not just beautiful, but that also evoke emotion and tell a compelling story.',
+          isActive: true,
+          specialties: ['Photography', 'Photo Editing', 'Designer']
+        },
+        youtubeVideo: {
+          videoId: 'dQw4w9WgXcQ',
+          title: 'My Photography Journey',
+          description: 'A glimpse into my photography journey and creative process',
+          thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+          embedUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+        },
+        stats: {
+          title: 'My Achievements',
+          subtitle: 'Numbers that tell my story',
+          statsValues: [
+            { title: 'Years of Experience', subtitle: 'Professional Journey', key: 'yearsExperience', value: 14, order: 1 },
+            { title: 'Projects Completed', subtitle: 'Success Stories', key: 'projectsCompleted', value: 500, order: 2 },
+            { title: 'Happy Clients', subtitle: 'Satisfied Customers', key: 'happyClients', value: 200, order: 3 },
+            { title: 'Awards Won', subtitle: 'Recognition', key: 'awards', value: 25, order: 4 }
+          ],
+          isActive: true
+        },
+        bio: {
+          title: 'About Me',
+          description: 'I am a passionate photographer dedicated to capturing life\'s most precious moments. With a keen eye for detail and a love for storytelling, I strive to create images that are not just beautiful, but that also evoke emotion and tell a compelling story.',
+          isActive: true,
+          button: {
+            text: 'Read More',
+            url: '/about',
+            enabled: true
+          }
+        },
+        brands: {
+          title: 'Brands I Work With',
+          subtitle: 'Trusted by leading brands',
+          brands: [
+            { name: 'Canon', logo: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/brands/canon-logo.jpg', order: 1 },
+            { name: 'Adobe', logo: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/brands/adobe-logo.jpg', order: 2 },
+            { name: 'Sony', logo: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/brands/sony-logo.jpg', order: 3 },
+            { name: 'Nikon', logo: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/brands/nikon-logo.jpg', order: 4 }
+          ],
+          isActive: true
+        },
+        experience: {
+          title: 'My Experience',
+          subtitle: 'Professional journey and achievements',
+          experience: [
+            {
+              company: 'Clavmen Studio',
+              position: 'Senior UX Designer',
+              startDate: new Date('2022-01-01'),
+              endDate: undefined,
+              isPresent: true,
+              description: 'Clavmen inspires creativity and makes learning piano fun. The sleek, lightweight body fits easily into gig bags for portability.',
+              order: 1
+            },
+            {
+              company: 'Losify',
+              position: 'Lead Product Designer',
+              startDate: new Date('2013-01-01'),
+              endDate: new Date('2022-01-01'),
+              isPresent: false,
+              description: 'Fitness and well-being with personalized coaching and innovative wellness solutions.',
+              order: 2
+            },
+            {
+              company: 'Gamadias',
+              position: 'Junior UX Designer',
+              startDate: new Date('2012-01-01'),
+              endDate: new Date('2013-01-01'),
+              isPresent: false,
+              description: 'Gaming Experiences with Innovative Technology and Unparalleled Performance.',
+              order: 3
+            },
+            {
+              company: 'Freelance',
+              position: 'Web Designer',
+              startDate: new Date('2010-01-01'),
+              endDate: new Date('2012-01-01'),
+              isPresent: false,
+              description: 'Bringing creativity, technical expertise, and a passion for design to every project.',
+              order: 4
+            }
+          ],
+          isActive: true
+        },
+        services: {
+          title: 'My Services',
+          subtitle: 'What I offer',
+          services: [
+            { title: 'Portrait Photography', description: 'Professional portrait sessions for individuals and families', order: 1 },
+            { title: 'Event Photography', description: 'Capturing special moments at events and celebrations', order: 2 },
+            { title: 'Corporate Photography', description: 'Professional business and corporate photography', order: 3 },
+            { title: 'Product Photography', description: 'High-quality product and commercial photography', order: 4 },
+            { title: 'Aerial Photography', description: 'Stunning aerial shots using drone technology', order: 5 },
+            { title: 'Photo Editing', description: 'Professional post-processing and editing services', order: 6 }
+          ],
+          isActive: true
+        },
+        faq: {
+          title: 'Frequently Asked Questions',
+          subtitle: 'Common questions answered',
+          faq: [
+            {
+              question: 'How do I book a photography session with you?',
+              answer: 'You can book a session by filling out the contact form on my website or by emailing me directly at SaeedSekka@email.com. I\'ll get back to you within 24 hours to discuss the details and schedule your shoot.',
+              order: 1
+            },
+            {
+              question: 'What are your rates for photography sessions?',
+              answer: 'Portrait sessions start at $200. Event photography starts at $500. Commercial and product photography pricing is customized based on the project scope.',
+              order: 2
+            },
+            {
+              question: 'What does your pricing include?',
+              answer: 'Pre-shoot consultation. The photography session. Professional editing of selected images. A set number of high-resolution digital images. Online gallery for viewing and downloading photos.',
+              order: 3
+            },
+            {
+              question: 'What types of photography do you specialize in?',
+              answer: 'I specialize in a variety of photography services including portrait, travel, commercial, product, event, and landscape photography. Check out my portfolio to see examples of my work.',
+              order: 4
+            }
+          ],
+          isActive: true
         },
         socialMedia: {
-          instagram: 'https://instagram.com/saedsekka',
-          facebook: 'https://facebook.com/saedsekka',
-          twitter: 'https://twitter.com/saedsekka',
-          linkedin: 'https://linkedin.com/in/saedsekka',
+          isActive: true,
+          socialMedia: [
+            { icon: 'fab fa-instagram', url: 'https://instagram.com/saeedsekka', title: 'Instagram', order: 1 },
+            { icon: 'fab fa-facebook', url: 'https://facebook.com/saeedsekka', title: 'Facebook', order: 2 },
+            { icon: 'fab fa-twitter', url: 'https://twitter.com/saeed_sekka', title: 'Twitter', order: 3 },
+            { icon: 'fab fa-linkedin', url: 'https://linkedin.com/in/saeed-sekka', title: 'LinkedIn', order: 4 },
+            { icon: 'fab fa-youtube', url: 'https://youtube.com/@saeedsekka', title: 'YouTube', order: 5 },
+            { icon: 'fab fa-tiktok', url: 'https://tiktok.com/@saeedsekka', title: 'TikTok', order: 6 }
+          ]
         },
-        experience: [
-          {
-            company: 'Clavmen Studio',
-            position: 'Senior UX Designer',
-            startDate: new Date('2022-01-01'),
-            endDate: undefined,
-            isPresent: true,
-            description: 'Clavmen inspires creativity and makes learning piano fun. The sleek, lightweight body fits easily into gig bags for portability.',
-            location: 'New York, USA',
-            employmentType: 'Full-time',
-            achievements: [
-              'Led UX design for 5+ major projects',
-              'Increased user engagement by 40%',
-              'Mentored 3 junior designers'
-            ]
-          },
-          {
-            company: 'Losify',
-            position: 'Lead Product Designer',
-            startDate: new Date('2013-01-01'),
-            endDate: new Date('2022-01-01'),
-            isPresent: false,
-            description: 'Fitness and well-being with personalized coaching and innovative wellness solutions.',
-            location: 'San Francisco, USA',
-            employmentType: 'Full-time',
-            achievements: [
-              'Redesigned core product interface',
-              'Led team of 6 designers',
-              'Launched 10+ successful features'
-            ]
-          },
-          {
-            company: 'Gamadias',
-            position: 'Junior UX Designer',
-            startDate: new Date('2012-01-01'),
-            endDate: new Date('2013-01-01'),
-            isPresent: false,
-            description: 'Gaming Experiences with Innovative Technology and Unparalleled Performance.',
-            location: 'Los Angeles, USA',
-            employmentType: 'Full-time',
-            achievements: [
-              'Designed UI for gaming peripherals',
-              'Collaborated with hardware teams',
-              'Created design system'
-            ]
-          },
-          {
-            company: 'Freelance',
-            position: 'Web Designer',
-            startDate: new Date('2010-01-01'),
-            endDate: new Date('2012-01-01'),
-            isPresent: false,
-            description: 'Bringing creativity, technical expertise, and a passion for design to every project.',
-            location: 'Remote',
-            employmentType: 'Freelance',
-            achievements: [
-              'Completed 50+ web design projects',
-              'Built client base of 30+ companies',
-              'Specialized in e-commerce design'
-            ]
-          },
-        ],
-        faq: [
-          {
-            question: 'How do I book a photography session with you?',
-            answer: 'You can book a session by filling out the contact form on my website or by emailing me directly at SaeedSekka@email.com. I\'ll get back to you within 24 hours to discuss the details and schedule your shoot.',
-          },
-          {
-            question: 'What are your rates for photography sessions?',
-            answer: 'Portrait sessions start at $200. Event photography starts at $500. Commercial and product photography pricing is customized based on the project scope.',
-          },
-          {
-            question: 'What does your pricing include?',
-            answer: 'Pre-shoot consultation. The photography session. Professional editing of selected images. A set number of high-resolution digital images. Online gallery for viewing and downloading photos.',
-          },
-          {
-            question: 'What types of photography do you specialize in?',
-            answer: 'I specialize in a variety of photography services including portrait, travel, commercial, product, event, and landscape photography. Check out my portfolio to see examples of my work.',
-          },
-        ],
-        isActive: true,
+        ctaButtons: {
+          primary: { text: 'Book Now', url: '/contact', type: 'primary' },
+          secondary: { text: 'View Portfolio', url: '/portfolio', type: 'secondary' },
+          whatsapp: { text: 'WhatsApp', url: 'https://wa.me/966538683923', type: 'whatsapp' },
+          call: { text: 'Call Now', url: 'tel:+966538683923', type: 'call' }
+        }
       };
 
       const profile = await this.profileService.create(profileData);

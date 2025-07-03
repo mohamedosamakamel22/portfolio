@@ -29,10 +29,11 @@ export class ProfileService {
   }
 
   async findAll(): Promise<Profile[]> {
-    return this.profileModel.find({ isActive: true }).exec();
+    // Find profiles where hero section is active
+    return this.profileModel.find({ 'hero.isActive': true }).exec();
   }
 
-  async findOne(id: string): Promise<Profile> {
+  async findOne(id: string): Promise<ProfileDocument> {
     const profile = await this.profileModel.findOne({ userId: new mongoose.Types.ObjectId(id) }).exec();
     if (!profile) {
       throw new NotFoundException(`Profile with ID ${id} not found`);
@@ -41,7 +42,8 @@ export class ProfileService {
   }
 
   async findActive(): Promise<Profile | null> {
-    return this.profileModel.findOne({ isActive: true }).exec();
+    // Find profile where hero section is active
+    return this.profileModel.findOne({ 'hero.isActive': true }).exec();
   }
 
   // Portfolio-based methods
@@ -49,7 +51,7 @@ export class ProfileService {
     return this.profileModel
       .findOne({
         userId: userId,
-        isActive: true
+        'hero.isActive': true
       })
       .exec();
   }
@@ -80,8 +82,57 @@ export class ProfileService {
     if (!profile) {
       throw new NotFoundException(`Profile with ID ${id} not found`);
     }
-    await profile.set(updateProfileDto).save();
-    return profile
+
+    // Handle nested object updates properly
+    const updateData = { ...updateProfileDto };
+    
+    // If updating hero section partially, merge with existing data
+    if (updateData.hero && profile.hero) {
+      updateData.hero = { ...profile.hero, ...updateData.hero };
+    }
+    
+    // If updating stats section partially, merge with existing data
+    if (updateData.stats && profile.stats) {
+      updateData.stats = { ...profile.stats, ...updateData.stats };
+    }
+    
+    // If updating bio section partially, merge with existing data
+    if (updateData.bio && profile.bio) {
+      updateData.bio = { ...profile.bio, ...updateData.bio };
+    }
+    
+    // If updating brands section partially, merge with existing data
+    if (updateData.brands && profile.brands) {
+      updateData.brands = { ...profile.brands, ...updateData.brands };
+    }
+    
+    // If updating experience section partially, merge with existing data
+    if (updateData.experience && profile.experience) {
+      updateData.experience = { ...profile.experience, ...updateData.experience };
+    }
+    
+    // If updating services section partially, merge with existing data
+    if (updateData.services && profile.services) {
+      updateData.services = { ...profile.services, ...updateData.services };
+    }
+    
+    // If updating faq section partially, merge with existing data
+    if (updateData.faq && profile.faq) {
+      updateData.faq = { ...profile.faq, ...updateData.faq };
+    }
+    
+    // If updating socialMedia section partially, merge with existing data
+    if (updateData.socialMedia && profile.socialMedia) {
+      updateData.socialMedia = { ...profile.socialMedia, ...updateData.socialMedia };
+    }
+    
+    // If updating ctaButtons section partially, merge with existing data
+    if (updateData.ctaButtons && profile.ctaButtons) {
+      updateData.ctaButtons = { ...profile.ctaButtons, ...updateData.ctaButtons };
+    }
+
+    await profile.set(updateData).save();
+    return profile;
   }
 
   async remove(id: string): Promise<void> {
@@ -92,11 +143,31 @@ export class ProfileService {
   }
 
   async deactivate(id: string): Promise<Profile> {
-    return this.update(id, { isActive: false });
+    const profile = await this.profileModel.findOne({ userId: new mongoose.Types.ObjectId(id) }).exec();
+    if (!profile) {
+      throw new NotFoundException(`Profile with ID ${id} not found`);
+    }
+    
+    // Deactivate the hero section
+    if (profile.hero) {
+      profile.hero.isActive = false;
+    }
+    
+    return profile.save();
   }
 
   async activate(id: string): Promise<Profile> {
-    return this.update(id, { isActive: true });
+    const profile = await this.profileModel.findOne({ userId: new mongoose.Types.ObjectId(id) }).exec();
+    if (!profile) {
+      throw new NotFoundException(`Profile with ID ${id} not found`);
+    }
+    
+    // Activate the hero section
+    if (profile.hero) {
+      profile.hero.isActive = true;
+    }
+    
+    return profile.save();
   }
 
   async updateStats(id: string, stats: any): Promise<Profile> {
@@ -113,18 +184,30 @@ export class ProfileService {
     if (!profile) {
       throw new NotFoundException(`Profile with ID ${id} not found`);
     }
-    profile.experience = profile.experience || [];
-    profile.experience.push(experience);
+    
+    // Initialize experience section if it doesn't exist
+    if (!profile.experience) {
+      profile.experience = {
+        title: 'My Experience',
+        subtitle: 'Professional journey and achievements',
+        experience: [],
+        isActive: true
+      };
+    }
+    
+    // Add the new experience to the experience array
+    profile.experience.experience.push(experience);
     return profile.save();
   }
 
   async removeExperience(id: string, experienceIndex: number): Promise<Profile> {
-        const profile = await this.profileModel.findOne({ userId: new mongoose.Types.ObjectId(id) }).exec();
+    const profile = await this.profileModel.findOne({ userId: new mongoose.Types.ObjectId(id) }).exec();
     if (!profile) {
       throw new NotFoundException(`Profile with ID ${id} not found`);
     }
-    if (profile.experience && profile.experience.length > experienceIndex) {
-      profile.experience.splice(experienceIndex, 1);
+    
+    if (profile.experience && profile.experience.experience && profile.experience.experience.length > experienceIndex) {
+      profile.experience.experience.splice(experienceIndex, 1);
       return profile.save();
     }
     throw new NotFoundException('Experience not found');

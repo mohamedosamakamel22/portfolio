@@ -5,7 +5,7 @@ import { CreateContactDto } from '../contact/dto/create-contact.dto';
 import { ProfileService } from '../profile/profile.service';
 
 @ApiTags('Website - Contact Page')
-@Controller('website/:portfolioId/contact')
+@Controller('website/contact')
 export class WebsiteContactController {
   constructor(
     private readonly contactService: ContactService,
@@ -14,68 +14,63 @@ export class WebsiteContactController {
 
   @Get()
   @ApiOperation({ 
-    summary: 'Get contact page data for portfolio (public)',
-    description: 'Returns contact information, FAQ, and form configuration for specific portfolio'
+    summary: 'Get contact page data (public)',
+    description: 'Returns contact information and availability for the contact page'
   })
-  @ApiParam({ name: 'portfolioId', description: 'Portfolio user ID' })
-  async getContactPageData(@Param('portfolioId') portfolioId: string) {
-    const profile = await this.profileService.findByUserId(portfolioId);
-    
+  async getContactPageData() {
+    const profile = await this.profileService.findActive();
+
     return {
-      portfolioId,
-      contactInfo: {
-        name: profile?.name || 'Saeed Sekka',
-        email: profile?.email || 'SaeedSekka@email.com',
-        phone: profile?.phone || '+966-53-868-3923',
-        whatsapp: profile?.whatsapp || '+966-53-868-3923',
-        address: profile?.address || 'Riyadh, Saudi Arabia',
-        location: profile?.location || 'Riyadh, Saudi Arabia',
-        website: profile?.website || 'https://saeedseka.framer.website/',
+      // Basic contact info
+      name: profile?.hero ? `${profile.hero.firstName} ${profile.hero.lastName}` : 'Saeed Sekka',
+      email: profile?.hero?.phone || 'SaeedSekka@email.com', // Using phone as email for now
+      phone: profile?.hero?.phone || '+966-53-868-3923',
+      whatsapp: profile?.hero?.phone || '+966-53-868-3923',
+      address: profile?.hero?.address || 'Riyadh, Saudi Arabia',
+      location: profile?.hero?.address || 'Riyadh, Saudi Arabia',
+      website: 'https://saeedseka.framer.website/',
+      
+      // Availability (not in new schema)
+      availability: {
+        weekdays: true,
+        weekends: true,
+        holidays: false,
+        bookingAdvance: '2 weeks'
       },
+      
+      // Social media
       socialMedia: profile?.socialMedia || {},
-      services: profile?.services || [],
-      availability: profile?.availability || {
-        status: 'available',
-        message: 'Currently accepting new projects',
-        responseTime: '24 hours',
-      },
-      businessHours: (profile as any)?.businessHours || {
-        sunday: { open: '09:00', close: '17:00', isOpen: true },
-        monday: { open: '09:00', close: '17:00', isOpen: true },
-        tuesday: { open: '09:00', close: '17:00', isOpen: true },
-        wednesday: { open: '09:00', close: '17:00', isOpen: true },
-        thursday: { open: '09:00', close: '17:00', isOpen: true },
-        friday: { open: '13:00', close: '17:00', isOpen: true },
-        saturday: { open: '09:00', close: '17:00', isOpen: true },
-      },
-      faq: profile?.faq || [],
-      pricing: {
-        portraitSessions: 'Starting at $200',
-        eventPhotography: 'Starting at $500',
-        commercialPhotography: 'Custom pricing based on project scope',
-        consultationFee: 'Free initial consultation',
-      },
-      ctaMessage: (profile as any)?.ctaMessage || "Let's create something extraordinary together!",
-      responsePromise: "I'll get back to you within 24 hours to discuss your project.",
+      
+      // Call-to-action buttons
+      ctaButtons: profile?.ctaButtons || {},
     };
   }
 
   @Get('info')
-  @ApiOperation({ summary: 'Get contact information only for portfolio (public)' })
-  @ApiParam({ name: 'portfolioId', description: 'Portfolio user ID' })
-  async getContactInfo(@Param('portfolioId') portfolioId: string) {
-    const profile = await this.profileService.findByUserId(portfolioId);
-    
+  @ApiOperation({ summary: 'Get basic contact information only (public)' })
+  async getContactInfo() {
+    const profile = await this.profileService.findActive();
+
     return {
-      portfolioId,
-      name: profile?.name || 'Saeed Sekka',
-      email: profile?.email || 'SaeedSekka@email.com',
-      phone: profile?.phone || '+966-53-868-3923',
-      whatsapp: profile?.whatsapp || '+966-53-868-3923',
-      address: profile?.address || 'Riyadh, Saudi Arabia',
-      location: profile?.location || 'Riyadh, Saudi Arabia',
-      website: profile?.website || 'https://saeedseka.framer.website/',
-      socialMedia: profile?.socialMedia || {},
+      name: profile?.hero ? `${profile.hero.firstName} ${profile.hero.lastName}` : 'Saeed Sekka',
+      email: profile?.hero?.phone || 'SaeedSekka@email.com', // Using phone as email for now
+      phone: profile?.hero?.phone || '+966-53-868-3923',
+      whatsapp: profile?.hero?.phone || '+966-53-868-3923',
+      address: profile?.hero?.address || 'Riyadh, Saudi Arabia',
+      location: profile?.hero?.address || 'Riyadh, Saudi Arabia',
+      website: 'https://saeedseka.framer.website/',
+    };
+  }
+
+  @Get('pricing')
+  @ApiOperation({ summary: 'Get pricing information (public)' })
+  async getPricingInfo() {
+    return {
+      pricing: {
+        portraitSessions: 200,
+        eventPhotography: 500,
+        commercialPhotography: 'Custom pricing based on project scope',
+      }
     };
   }
 

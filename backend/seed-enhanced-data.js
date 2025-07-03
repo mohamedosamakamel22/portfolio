@@ -237,10 +237,15 @@ async function seedEnhancedData() {
 
       // Social Media - From website
       socialMedia: {
-        instagram: { handle: '@saeedsekka', url: 'https://instagram.com/saeedsekka', followers: '15.2K', icon: '📷', verified: false },
-        facebook: { handle: 'Saeed Sekka', url: 'https://facebook.com/saeedsekka', followers: '8.5K', icon: '👥', verified: false },
-        twitter: { handle: '@saeed_sekka', url: 'https://twitter.com/saeed_sekka', followers: '4.2K', icon: '🐦', verified: false },
-        linkedin: { handle: 'saeed-sekka', url: 'https://linkedin.com/in/saeed-sekka', followers: '6.8K', icon: '💼', verified: false }
+        isActive: true,
+        socialMedia: [
+          { icon: 'fab fa-instagram', url: 'https://instagram.com/saeedsekka', title: 'Instagram', order: 1 },
+          { icon: 'fab fa-facebook', url: 'https://facebook.com/saeedsekka', title: 'Facebook', order: 2 },
+          { icon: 'fab fa-twitter', url: 'https://twitter.com/saeed_sekka', title: 'Twitter', order: 3 },
+          { icon: 'fab fa-linkedin', url: 'https://linkedin.com/in/saeed-sekka', title: 'LinkedIn', order: 4 },
+          { icon: 'fab fa-youtube', url: 'https://youtube.com/@saeedsekka', title: 'YouTube', order: 5 },
+          { icon: 'fab fa-tiktok', url: 'https://tiktok.com/@saeedsekka', title: 'TikTok', order: 6 }
+        ]
       },
 
       // Comprehensive Gear Information - From Website
