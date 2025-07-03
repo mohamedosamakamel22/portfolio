@@ -7,7 +7,8 @@
     "build": "cd backend && npm install && npm run build",
     "start": "cd backend && npm run start:prod",
     "dev": "cd backend && npm run start:dev",
-    "install-deps": "cd backend && npm install"
+    "install-deps": "cd backend && npm install",
+    "postinstall": "cd backend && npm install"
   },
   "keywords": ["portfolio", "photography", "cms", "nestjs", "api"],
   "author": "Mohamed Osama",

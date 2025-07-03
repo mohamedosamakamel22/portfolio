@@ -14,7 +14,7 @@ RUN cd backend && npm install
 COPY . .
 
 # Build the application
-RUN npm run build
+RUN cd backend && npm run build
 
 # Expose port
 EXPOSE 3000
