@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  # Main API service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+      - MONGODB_URI=mongodb://mongo:27017/portfolio
+      - JWT_SECRET=development-jwt-secret-key
+      - JWT_REFRESH_SECRET=development-jwt-refresh-secret-key
+      - CLOUDINARY_URL=${CLOUDINARY_URL}
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - mongo
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+
+  # MongoDB service
+  mongo:
+    image: mongo:7.0
+    ports:
+      - '27017:27017'
+    environment:
+      - MONGO_INITDB_DATABASE=portfolio
+    volumes:
+      - mongo_data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+
+  # MongoDB Admin UI (optional)
+  mongo-express:
+    image: mongo-express:latest
+    ports:
+      - '8081:8081'
+    environment:
+      - ME_CONFIG_MONGODB_URL=mongodb://mongo:27017/portfolio
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=admin123
+    depends_on:
+      - mongo
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+
+  # Redis for caching (optional but recommended for production)
+  redis:
+    image: redis:7-alpine
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+
+volumes:
+  mongo_data:
+  redis_data:
+
+networks:
+  portfolio-network:
+    driver: bridge 
