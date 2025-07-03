@@ -1,38 +1,17 @@
 {
   "name": "photography-portfolio-cms",
   "version": "1.0.0",
-  "description": "Multi-tenant photography portfolio management system with portfolio-scoped APIs",
-  "main": "backend/src/main.ts",
+  "description": "Photography Portfolio CMS with Backend API",
+  "main": "index.js",
   "scripts": {
-    "start": "cd backend && npm run start",
-    "start:dev": "cd backend && npm run start:dev",
-    "start:prod": "cd backend && npm run start:prod",
-    "build": "cd backend && npm run build",
-    "test": "cd backend && npm run test",
-    "test:e2e": "cd backend && npm run test:e2e",
-    "install:backend": "cd backend && npm install",
-    "seed": "cd backend && node seed-enhanced-data.js",
-    "setup": "npm run install:backend && npm run seed",
-    "dev": "npm run start:dev",
-    "demo": "node demo-portfolio-apis.js",
-    "docs": "echo 'Visit http://localhost:3000/api/docs for API documentation'",
-    "test-users": "echo '🧪 Testing User Management APIs...' && curl -s -X POST 'http://localhost:3000/api/auth/login' -H 'Content-Type: application/json' -d '{\"email\":\"SaeedSekka@email.com\",\"password\":\"admin123\"}' | node -pe 'const r=JSON.parse(require(\"fs\").readFileSync(0));console.log(\"✅ Login successful\");console.log(\"🔑 Token:\",r.access_token.substring(0,20)+\"...\");console.log(\"👤 User:\",r.user.firstName,r.user.lastName,\"(\"+r.user.role+\")\");console.log(\"🎯 Test user management at: http://localhost:3000/api/docs\");\"\"'"
+    "build": "cd backend && npm install && npm run build",
+    "start": "cd backend && npm run start:prod",
+    "dev": "cd backend && npm run start:dev",
+    "install-deps": "cd backend && npm install"
   },
-  "keywords": [
-    "photography",
-    "portfolio",
-    "cms", 
-    "nestjs",
-    "mongodb",
-    "multi-tenant",
-    "api"
-  ],
-  "author": "Photography Portfolio CMS",
-  "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/your-username/photography-portfolio-cms.git"
-  },
+  "keywords": ["portfolio", "photography", "cms", "nestjs", "api"],
+  "author": "Mohamed Osama",
+  "license": "MIT",
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=8.0.0"
