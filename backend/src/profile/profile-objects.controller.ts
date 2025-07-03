@@ -14,104 +14,97 @@ export class ProfileObjectsController {
     private readonly profileService: ProfileService,
   ) { }
 
-  @Get('hero/:userId')
-  @ApiOperation({ summary: 'Get hero section by user ID' })
-  @ApiParam({ name: 'userId', description: 'User ID' })
+ 
+
+  @Get('stats')
+  @ApiOperation({ summary: 'Get stats section ' })
+  @ApiResponse({ status: 200, description: 'Stats section retrieved successfully' })
+  @ApiResponse({ status: 404, description: 'Profile not found' })
+  async getStatsByUserId() {
+    const profile = await this.profileService.findOne("685fe192e9ad4407f2b52ce4");
+    if (!profile.stats) {
+      throw new NotFoundException('Stats section not found for this user');
+    }
+    return profile.stats;
+  }
+  @Get('hero')  
+  @ApiOperation({ summary: 'Get hero section ' })
   @ApiResponse({ status: 200, description: 'Hero section retrieved successfully' })
   @ApiResponse({ status: 404, description: 'Profile not found' })
-  async getHeroByUserId(@Param('userId') userId: string) {
-    const profile = await this.profileService.findOne(userId);
+  async getHeroByUserId() {
+    const profile = await this.profileService.findOne("685fe192e9ad4407f2b52ce4");
     if (!profile.hero) {
       throw new NotFoundException('Hero section not found for this user');
     }
     return profile.hero;
   }
 
-  @Get('stats/:userId')
-  @ApiOperation({ summary: 'Get stats section by user ID' })
-  @ApiParam({ name: 'userId', description: 'User ID' })
-  @ApiResponse({ status: 200, description: 'Stats section retrieved successfully' })
-  @ApiResponse({ status: 404, description: 'Profile not found' })
-  async getStatsByUserId(@Param('userId') userId: string) {
-    const profile = await this.profileService.findOne(userId);
-    if (!profile.stats) {
-      throw new NotFoundException('Stats section not found for this user');
-    }
-    return profile.stats;
-  }
-
-  @Get('bio/:userId')
-  @ApiOperation({ summary: 'Get bio section by user ID' })
-  @ApiParam({ name: 'userId', description: 'User ID' })
+  @Get('bio')
+  @ApiOperation({ summary: 'Get bio section ' })
   @ApiResponse({ status: 200, description: 'Bio section retrieved successfully' })
   @ApiResponse({ status: 404, description: 'Profile not found' })
-  async getBioByUserId(@Param('userId') userId: string) {
-    const profile = await this.profileService.findOne(userId);
+  async getBioByUserId() {
+    const profile = await this.profileService.findOne("685fe192e9ad4407f2b52ce4");
     if (!profile.bio) {
       throw new NotFoundException('Bio section not found for this user');
     }
     return profile.bio;
   }
 
-  @Get('brands/:userId')
-  @ApiOperation({ summary: 'Get brands section by user ID' })
-  @ApiParam({ name: 'userId', description: 'User ID' })
+  @Get('brands')
+  @ApiOperation({ summary: 'Get brands section ' })
   @ApiResponse({ status: 200, description: 'Brands section retrieved successfully' })
   @ApiResponse({ status: 404, description: 'Profile not found' })
-  async getBrandsByUserId(@Param('userId') userId: string) {
-    const profile = await this.profileService.findOne(userId);
+  async getBrandsByUserId() {
+    const profile = await this.profileService.findOne("685fe192e9ad4407f2b52ce4");
     if (!profile.brands) {
       throw new NotFoundException('Brands section not found for this user');
     }
     return profile.brands;
   }
 
-  @Get('experience/:userId')
-  @ApiOperation({ summary: 'Get experience section by user ID' })
-  @ApiParam({ name: 'userId', description: 'User ID' })
+  @Get('experience')
+  @ApiOperation({ summary: 'Get experience section ' })
   @ApiResponse({ status: 200, description: 'Experience section retrieved successfully' })
   @ApiResponse({ status: 404, description: 'Profile not found' })
-  async getExperienceByUserId(@Param('userId') userId: string) {
-    const profile = await this.profileService.findOne(userId);
+  async getExperienceByUserId() {
+    const profile = await this.profileService.findOne("685fe192e9ad4407f2b52ce4");
     if (!profile.experience) {
       throw new NotFoundException('Experience section not found for this user');
     }
     return profile.experience;
   }
 
-  @Get('services/:userId')
-  @ApiOperation({ summary: 'Get services section by user ID' })
-  @ApiParam({ name: 'userId', description: 'User ID' })
+  @Get('services')
+  @ApiOperation({ summary: 'Get services section ' })
   @ApiResponse({ status: 200, description: 'Services section retrieved successfully' })
   @ApiResponse({ status: 404, description: 'Profile not found' })
-  async getServicesByUserId(@Param('userId') userId: string) {
-    const profile = await this.profileService.findOne(userId);
+  async getServicesByUserId() {
+    const profile = await this.profileService.findOne("685fe192e9ad4407f2b52ce4");
     if (!profile.services) {
       throw new NotFoundException('Services section not found for this user');
     }
     return profile.services;
   }
 
-  @Get('faq/:userId')
-  @ApiOperation({ summary: 'Get FAQ section by user ID' })
-  @ApiParam({ name: 'userId', description: 'User ID' })
+  @Get('faq')
+  @ApiOperation({ summary: 'Get FAQ section ' })
   @ApiResponse({ status: 200, description: 'FAQ section retrieved successfully' })
   @ApiResponse({ status: 404, description: 'Profile not found' })
-  async getFaqByUserId(@Param('userId') userId: string) {
-    const profile = await this.profileService.findOne(userId);
+  async getFaqByUserId() {
+    const profile = await this.profileService.findOne("685fe192e9ad4407f2b52ce4");
     if (!profile.faq) {
       throw new NotFoundException('FAQ section not found for this user');
     }
     return profile.faq;
   }
 
-  @Get('social-media/:userId')
-  @ApiOperation({ summary: 'Get social media section by user ID' })
-  @ApiParam({ name: 'userId', description: 'User ID' })
+  @Get('social-media')
+  @ApiOperation({ summary: 'Get social media section ' })
   @ApiResponse({ status: 200, description: 'Social media section retrieved successfully' })
   @ApiResponse({ status: 404, description: 'Profile not found' })
-  async getSocialMediaByUserId(@Param('userId') userId: string) {
-    const profile = await this.profileService.findOne(userId);
+  async getSocialMediaByUserId() {
+    const profile = await this.profileService.findOne("685fe192e9ad4407f2b52ce4");
     if (!profile.socialMedia) {
       throw new NotFoundException('Social media section not found for this user');
     }

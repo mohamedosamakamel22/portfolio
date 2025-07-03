@@ -170,12 +170,19 @@ export class ProfileService {
     return profile.save();
   }
 
-  async updateStats(id: string, stats: any): Promise<Profile> {
+  async updateStats(id: string, updateStatsDto: any): Promise<Profile> {
     const profile = await this.profileModel.findOne({ userId: new mongoose.Types.ObjectId(id) }).exec();
     if (!profile) {
       throw new NotFoundException(`Profile with ID ${id} not found`);
     }
-    profile.stats = stats;
+    
+    // Merge existing stats with updates
+    const updatedStats = {
+      ...profile.stats,
+      ...updateStatsDto
+    };
+    
+    profile.stats = updatedStats;
     return profile.save();
   }
 

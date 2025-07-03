@@ -462,7 +462,7 @@ export class ProfileController {
   @Roles(UserRole.ADMIN)
   @ApiBearerAuth()
   updateStats(@Param('id') id: string, @Body() updateStatsDto: UpdateStatsDto) {
-    return this.profileService.updateStats(id, updateStatsDto.stats);
+    return this.profileService.updateStats(id, updateStatsDto);
   }
 
   @Post(':id/experience')
