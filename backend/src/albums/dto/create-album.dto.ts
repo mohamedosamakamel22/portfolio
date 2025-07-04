@@ -1,70 +1,87 @@
-import { IsString, IsOptional, IsBoolean, IsNumber, IsDateString, IsArray, ValidateNested } from 'class-validator';
+import { IsString, IsOptional, IsBoolean, IsArray, ValidateNested, IsNotEmpty, IsUrl, MinLength, MaxLength, ArrayMaxSize, IsObject } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
 class ImageDto {
   @ApiProperty({ example: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/travel/india-1.jpg' })
   @IsString()
+  @IsNotEmpty()
+  @IsUrl()
   url: string;
-
-  @ApiProperty({ example: 'portfolio/travel/india-1' })
-  @IsString()
-  publicId: string;
 
   @ApiProperty({ example: 'Colorful streets of India', required: false })
   @IsOptional()
   @IsString()
-  caption?: string;
-
-  @ApiProperty({ example: 'Vibrant Indian street scene', required: false })
-  @IsOptional()
-  @IsString()
+  @MaxLength(200)
   alt?: string;
 }
 
-class MetadataDto {
-  @ApiProperty({ example: 'Fujifilm X-T4', required: false })
-  @IsOptional()
+class FeatureDto {
+  @ApiProperty({ example: '📸' })
   @IsString()
-  camera?: string;
+  @IsNotEmpty()
+  @MaxLength(10)
+  icon: string;
 
-  @ApiProperty({ example: 'Fujinon XF 23mm f/1.4 R, Fujinon XF 35mm f/2 R WR', required: false })
-  @IsOptional()
+  @ApiProperty({ example: 'Camera Used' })
   @IsString()
-  lens?: string;
+  @IsNotEmpty()
+  @MinLength(1)
+  @MaxLength(100)
+  title: string;
 
-  @ApiProperty({ example: 'ISO 200, f/8, 1/125s', required: false })
+  @ApiProperty({ example: 'Fujifilm X-T4' })
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(1)
+  @MaxLength(200)
+  value: string;
+
+  @ApiProperty({ example: 1 })
   @IsOptional()
   @IsString()
-  settings?: string;
+  order: number;
 }
 
 class SpecificationDto {
   @ApiProperty({ example: '📂' })
   @IsString()
+  @IsNotEmpty()
+  @MaxLength(10)
   icon: string;
 
   @ApiProperty({ example: 'Category' })
   @IsString()
+  @IsNotEmpty()
+  @MinLength(1)
+  @MaxLength(100)
   name: string;
 
   @ApiProperty({ example: 'Travel' })
   @IsString()
+  @IsNotEmpty()
+  @MinLength(1)
+  @MaxLength(200)
   value: string;
 
   @ApiProperty({ example: 1, required: false })
   @IsOptional()
-  @IsNumber()
+  @IsString()
   order?: number;
 }
 
 class ActionButtonDto {
   @ApiProperty({ example: 'Buy Prints' })
   @IsString()
+  @IsNotEmpty()
+  @MinLength(1)
+  @MaxLength(50)
   text: string;
 
   @ApiProperty({ example: 'https://prints.saeedseka.com/colorful-india' })
   @IsString()
+  @IsNotEmpty()
+  @IsUrl()
   url: string;
 
   @ApiProperty({ example: true })
@@ -74,64 +91,76 @@ class ActionButtonDto {
   @ApiProperty({ example: 'primary', required: false })
   @IsOptional()
   @IsString()
+  @MaxLength(20)
   style?: string;
 }
 
 class YoutubeVideoDto {
   @ApiProperty({ example: 'YqeW9_5kURI' })
   @IsString()
+  @IsNotEmpty()
+  @MinLength(1)
+  @MaxLength(20)
   videoId: string;
 
   @ApiProperty({ example: 'Colorful India - Behind the Scenes' })
   @IsString()
+  @IsNotEmpty()
+  @MinLength(1)
+  @MaxLength(200)
   title: string;
 
   @ApiProperty({ example: 'Take a journey behind the scenes of our collaborative travel photography project in India, capturing the vibrant street life and cultural diversity.' })
   @IsString()
+  @IsNotEmpty()
+  @MinLength(1)
+  @MaxLength(1000)
   description: string;
 
   @ApiProperty({ example: 'https://img.youtube.com/vi/YqeW9_5kURI/maxresdefault.jpg' })
   @IsString()
+  @IsNotEmpty()
+  @IsUrl()
   thumbnail: string;
 
   @ApiProperty({ example: 'https://www.youtube.com/embed/YqeW9_5kURI' })
   @IsString()
+  @IsNotEmpty()
+  @IsUrl()
   embedUrl: string;
 
   @ApiProperty({ example: '4:32', required: false })
   @IsOptional()
   @IsString()
+  @MaxLength(10)
   duration?: string;
 }
 
 export class CreateAlbumDto {
   @ApiProperty({ example: 'Colorful India' })
   @IsString()
+  @IsNotEmpty()
+  @MinLength(1)
+  @MaxLength(200)
   title: string;
 
   @ApiProperty({ example: 'Travel photography collaboration showcasing the vibrant colors and culture of India' })
   @IsString()
+  @IsNotEmpty()
+  @MinLength(1)
+  @MaxLength(2000)
   description: string;
-
-  @ApiProperty({ example: 'Travel' })
-  @IsString()
-  category: string;
-
-  @ApiProperty({ example: 'Collaboration' })
-  @IsString()
-  projectType: string;
 
   @ApiProperty({ example: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/travel/colorful-india-cover.jpg', required: false })
   @IsOptional()
   @IsString()
+  @IsUrl()
   coverImage?: string;
 
   @ApiProperty({
     example: [
       {
         url: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/travel/india-1.jpg',
-        publicId: 'portfolio/travel/india-1',
-        caption: 'Colorful streets of India',
         alt: 'Vibrant Indian street scene'
       }
     ],
@@ -139,6 +168,7 @@ export class CreateAlbumDto {
   })
   @IsOptional()
   @IsArray()
+  @ArrayMaxSize(20)
   @ValidateNested({ each: true })
   @Type(() => ImageDto)
   images?: ImageDto[];
@@ -146,56 +176,28 @@ export class CreateAlbumDto {
   @ApiProperty({ example: ['Travel', 'Collaboration'], required: false })
   @IsOptional()
   @IsArray()
+  @ArrayMaxSize(20)
   @IsString({ each: true })
+  @MaxLength(50, { each: true })
   tags?: string[];
 
-  @ApiProperty({ example: 'India Tourism', required: false })
-  @IsOptional()
-  @IsString()
-  client?: string;
-
-  @ApiProperty({ example: 'India', required: false })
-  @IsOptional()
-  @IsString()
-  location?: string;
-
-  @ApiProperty({ example: '2024-04-15T10:00:00.000Z', required: false })
-  @IsOptional()
-  @IsDateString()
-  shootDate?: Date;
-
-  @ApiProperty({ example: true, required: false })
-  @IsOptional()
-  @IsBoolean()
-  isPublished?: boolean;
-
-  @ApiProperty({ example: true, required: false })
-  @IsOptional()
-  @IsBoolean()
-  isFeatured?: boolean;
-
-  @ApiProperty({ example: 324, required: false })
-  @IsOptional()
-  @IsNumber()
-  viewCount?: number;
-
-  @ApiProperty({ example: 1, required: false })
-  @IsOptional()
-  @IsNumber()
-  sortOrder?: number;
-
   @ApiProperty({
-    example: {
-      camera: 'Fujifilm X-T4',
-      lens: 'Fujinon XF 23mm f/1.4 R, Fujinon XF 35mm f/2 R WR',
-      settings: 'ISO 200, f/8, 1/125s'
-    },
+    example: [
+      {
+        icon: '📸',
+        title: 'Camera Used',
+        value: 'Fujifilm X-T4',
+        order: 1
+      }
+    ],
     required: false
   })
   @IsOptional()
-  @ValidateNested()
-  @Type(() => MetadataDto)
-  metadata?: MetadataDto;
+  @IsArray()
+  @ArrayMaxSize(10)
+  @ValidateNested({ each: true })
+  @Type(() => FeatureDto)
+  features?: FeatureDto[];
 
   @ApiProperty({
     example: [
@@ -210,6 +212,7 @@ export class CreateAlbumDto {
   })
   @IsOptional()
   @IsArray()
+  @ArrayMaxSize(10)
   @ValidateNested({ each: true })
   @Type(() => SpecificationDto)
   specifications?: SpecificationDto[];
@@ -224,19 +227,10 @@ export class CreateAlbumDto {
     required: false
   })
   @IsOptional()
+  @IsObject()
   @ValidateNested()
   @Type(() => ActionButtonDto)
   actionButton?: ActionButtonDto;
-
-  @ApiProperty({ example: '2024-04-15T18:00:00.000Z', required: false })
-  @IsOptional()
-  @IsDateString()
-  eventDate?: Date;
-
-  @ApiProperty({ example: 156, required: false })
-  @IsOptional()
-  @IsNumber()
-  likes?: number;
 
   @ApiProperty({
     example: {
@@ -250,17 +244,14 @@ export class CreateAlbumDto {
     required: false
   })
   @IsOptional()
+  @IsObject()
   @ValidateNested()
   @Type(() => YoutubeVideoDto)
   youtubeVideo?: YoutubeVideoDto;
 
-  @ApiProperty({ example: 'To capture the vibrant life, culture, and diversity of India\'s streets through a collaborative travel photography project. The aim was to document everyday moments, unique street scenes, and cultural events, showcasing the essence of Indian street life.', required: false })
-  @IsOptional()
-  @IsString()
-  projectGoal?: string;
-
   @ApiProperty({ example: '507f1f77bcf86cd799439011', description: 'ID of the user who created the album', required: false })
   @IsOptional()
   @IsString()
+  @IsNotEmpty()
   createdBy?: string;
 } 

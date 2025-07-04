@@ -232,7 +232,7 @@ export class SeedService {
       ];
 
       for (const reviewData of reviewsData) {
-        await this.reviewsService.create(reviewData);
+        await this.reviewsService.create({ ...reviewData, userId: '685fe192e9ad4407f2b52ce4' });
       }
       console.log('✅ Reviews seeded successfully');
     } catch (error) {

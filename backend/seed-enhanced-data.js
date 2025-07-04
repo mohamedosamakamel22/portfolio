@@ -692,57 +692,36 @@ async function seedEnhancedData() {
         createdBy: adminUser, // Link album to admin user
         title: 'Colorful India',
         description: 'Travel photography collaboration showcasing the vibrant colors and culture of India',
-        projectGoal: 'To capture the vibrant life, culture, and diversity of India\'s streets through a collaborative travel photography project. The aim was to document everyday moments, unique street scenes, and cultural events, showcasing the essence of Indian street life.',
-        category: 'Travel',
-        projectType: 'Collaboration',
-        tags: ['Travel', 'Collaboration'],//  filter by tags
-        coverImage: {
-          url: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/travel/colorful-india-cover.jpg',
-          publicId: 'portfolio/travel/colorful-india-cover',
-          width: 1200,
-          height: 800,
-          alt: 'Colorful India travel photography cover'
-        },
+        tags: ['Travel', 'Collaboration'],
+        coverImage: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/travel/colorful-india-cover.jpg',
         images: [
           {
             url: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/travel/india-1.jpg',
-            publicId: 'portfolio/travel/india-1',
-            width: 1200,
-            height: 800,
-            alt: 'Vibrant Indian street scene',
-            caption: 'Colorful streets of India'
+            alt: 'Vibrant Indian street scene'
           },
           {
             url: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/travel/india-2.jpg',
-            publicId: 'portfolio/travel/india-2',
-            width: 1200,
-            height: 800,
-            alt: 'Traditional Indian architecture',
-            caption: 'Traditional architecture and culture'
+            alt: 'Traditional Indian architecture'
           }
         ],
-        
-        // Album specifications from website
+        features: [
+          { icon: '📸', title: 'Camera Used', value: 'Fujifilm X-T4', order: 1 },
+          { icon: '🔍', title: 'Lenses', value: 'Fujinon XF 23mm f/1.4 R, Fujinon XF 35mm f/2 R WR', order: 2 },
+          { icon: '🚁', title: 'Other Devices', value: 'Mavic Air', order: 3 }
+        ],
         specifications: [
           { icon: '📂', name: 'Category', value: 'Travel', order: 1 },
           { icon: '🤝', name: 'Project Type', value: 'Collaboration', order: 2 },
-          { icon: '📸', name: 'Camera', value: 'Fujifilm X-T4', order: 3 },
-          { icon: '🔍', name: 'Lenses', value: 'Fujinon XF 23mm f/1.4 R, Fujinon XF 35mm f/2 R WR', order: 4 },
-          { icon: '🚁', name: 'Other Devices', value: 'Mavic Air', order: 5 },
-          { icon: '📍', name: 'Location', value: 'India', order: 6 },
-          { icon: '📅', name: 'Time', value: 'April 2024', order: 7 },
-          { icon: '🏢', name: 'Client', value: 'India Tourism', order: 8 }
+          { icon: '📍', name: 'Location', value: 'India', order: 3 },
+          { icon: '📅', name: 'Time', value: 'April 2024', order: 4 },
+          { icon: '🏢', name: 'Client', value: 'India Tourism', order: 5 }
         ],
-        
-        // Action button for album
         actionButton: {
           text: 'Buy Prints',
           url: 'https://prints.saeedseka.com/colorful-india',
           enabled: true,
           style: 'primary'
         },
-
-        // YouTube video showcasing the project
         youtubeVideo: {
           videoId: 'YqeW9_5kURI',
           title: 'Colorful India - Behind the Scenes',
@@ -751,13 +730,6 @@ async function seedEnhancedData() {
           embedUrl: 'https://www.youtube.com/embed/YqeW9_5kURI',
           duration: '4:32'
         },
-        
-        isPublished: true,
-        isFeatured: true,
-        viewCount: 324,
-        likes: 156,
-        location: 'India',
-        eventDate: new Date('2024-04-15'),
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -765,35 +737,24 @@ async function seedEnhancedData() {
         createdBy: adminUser, // Link album to admin user
         title: 'Echoes of Dreams',
         description: 'Conceptual commercial photography exploring abstract themes and creative vision',
-        projectGoal: 'To explore the intersection between dreams and reality through abstract conceptual photography, challenging viewers to interpret their own meaning while showcasing innovative commercial photography techniques.',
-        category: 'Conceptual',
-        projectType: 'Commercial',
         tags: ['Conceptual', 'Commercial'],
-        coverImage: {
-          url: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/conceptual/echoes-dreams-cover.jpg',
-          publicId: 'portfolio/conceptual/echoes-dreams-cover',
-          width: 1200,
-          height: 800,
-          alt: 'Echoes of Dreams conceptual photography cover'
-        },
+        coverImage: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/conceptual/echoes-dreams-cover.jpg',
         images: [
           {
             url: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/conceptual/dreams-1.jpg',
-            publicId: 'portfolio/conceptual/dreams-1',
-            width: 1200,
-            height: 800,
-            alt: 'Abstract conceptual photography',
-            caption: 'Conceptual art and dreams'
+            alt: 'Abstract conceptual photography'
           }
+        ],
+        features: [
+          { icon: '📸', title: 'Camera Used', value: 'Canon EOS R5', order: 1 },
+          { icon: '🔍', title: 'Lenses', value: 'Canon RF 50mm f/1.2L USM', order: 2 },
+          { icon: '💡', title: 'Lighting', value: 'Studio Strobes', order: 3 }
         ],
         specifications: [
           { icon: '📂', name: 'Category', value: 'Conceptual', order: 1 },
           { icon: '💼', name: 'Project Type', value: 'Commercial', order: 2 },
-          { icon: '📸', name: 'Camera', value: 'Canon EOS R5', order: 3 },
-          { icon: '🔍', name: 'Lenses', value: 'Canon RF 50mm f/1.2L USM', order: 4 },
-          { icon: '💡', name: 'Lighting', value: 'Studio Strobes', order: 5 },
-          { icon: '📍', name: 'Location', value: 'Studio', order: 6 },
-          { icon: '📅', name: 'Time', value: 'February 2024', order: 7 }
+          { icon: '📍', name: 'Location', value: 'Studio', order: 3 },
+          { icon: '📅', name: 'Time', value: 'February 2024', order: 4 }
         ],
         actionButton: {
           text: 'View Series',
@@ -801,8 +762,6 @@ async function seedEnhancedData() {
           enabled: true,
           style: 'secondary'
         },
-
-        // YouTube video for conceptual project
         youtubeVideo: {
           videoId: 'M7lc1UVf-VE',
           title: 'Echoes of Dreams - Creative Process',
@@ -811,13 +770,6 @@ async function seedEnhancedData() {
           embedUrl: 'https://www.youtube.com/embed/M7lc1UVf-VE',
           duration: '3:47'
         },
-
-        isPublished: true,
-        isFeatured: true,
-        viewCount: 289,
-        likes: 134,
-        location: 'Studio',
-        eventDate: new Date('2024-02-20'),
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -825,35 +777,24 @@ async function seedEnhancedData() {
         createdBy: adminUser, // Link album to admin user
         title: 'Wings of Freedom',
         description: 'Aerial and drone photography passion project capturing freedom from above',
-        projectGoal: 'To showcase the world from a bird\'s-eye perspective, capturing the essence of freedom and vastness through innovative aerial photography techniques and creative drone cinematography.',
-        category: 'Aerial & Drone',
-        projectType: 'Passion Project',
         tags: ['Aerial & Drone', 'Passion Project'],
-        coverImage: {
-          url: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/aerial/wings-freedom-cover.jpg',
-          publicId: 'portfolio/aerial/wings-freedom-cover',
-          width: 1200,
-          height: 800,
-          alt: 'Wings of Freedom aerial photography cover'
-        },
+        coverImage: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/aerial/wings-freedom-cover.jpg',
         images: [
           {
             url: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/aerial/wings-1.jpg',
-            publicId: 'portfolio/aerial/wings-1',
-            width: 1200,
-            height: 800,
-            alt: 'Aerial landscape view',
-            caption: 'Freedom captured from above'
+            alt: 'Aerial landscape view'
           }
+        ],
+        features: [
+          { icon: '🚁', title: 'Drone Used', value: 'DJI Mavic 3 Pro', order: 1 },
+          { icon: '📸', title: 'Camera', value: 'Hasselblad L2D-20c', order: 2 },
+          { icon: '🎯', title: 'Flight Pattern', value: 'Cinematic Mapping', order: 3 }
         ],
         specifications: [
           { icon: '📂', name: 'Category', value: 'Aerial & Drone', order: 1 },
           { icon: '❤️', name: 'Project Type', value: 'Passion Project', order: 2 },
-          { icon: '🚁', name: 'Drone', value: 'DJI Mavic 3 Pro', order: 3 },
-          { icon: '📸', name: 'Camera', value: 'Hasselblad L2D-20c', order: 4 },
-          { icon: '🎯', name: 'Flight Pattern', value: 'Cinematic Mapping', order: 5 },
-          { icon: '📍', name: 'Location', value: 'Various Locations', order: 6 },
-          { icon: '📅', name: 'Time', value: 'March 2024', order: 7 }
+          { icon: '📍', name: 'Location', value: 'Various Locations', order: 3 },
+          { icon: '📅', name: 'Time', value: 'March 2024', order: 4 }
         ],
         actionButton: {
           text: 'Aerial Prints',
@@ -861,8 +802,6 @@ async function seedEnhancedData() {
           enabled: true,
           style: 'primary'
         },
-
-        // YouTube video for aerial project
         youtubeVideo: {
           videoId: 'dNJdJIwCF_Y',
           title: 'Wings of Freedom - Aerial Photography Journey',
@@ -871,13 +810,6 @@ async function seedEnhancedData() {
           embedUrl: 'https://www.youtube.com/embed/dNJdJIwCF_Y',
           duration: '5:18'
         },
-
-        isPublished: true,
-        isFeatured: true,
-        viewCount: 412,
-        likes: 198,
-        location: 'Various Locations',
-        eventDate: new Date('2024-03-10'),
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -885,35 +817,24 @@ async function seedEnhancedData() {
         createdBy: adminUser, // Link album to admin user
         title: 'Crafted Perfection',
         description: 'Professional product photography showcasing commercial craftsmanship',
-        projectGoal: 'To highlight the intricate details and superior quality of handcrafted products through precise lighting and composition, emphasizing the artisanal craftsmanship and commercial appeal.',
-        category: 'Product',
-        projectType: 'Commercial',
         tags: ['Product', 'Commercial'],
-        coverImage: {
-          url: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/product/crafted-perfection-cover.jpg',
-          publicId: 'portfolio/product/crafted-perfection-cover',
-          width: 1200,
-          height: 800,
-          alt: 'Crafted Perfection product photography cover'
-        },
+        coverImage: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/product/crafted-perfection-cover.jpg',
         images: [
           {
             url: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/product/crafted-1.jpg',
-            publicId: 'portfolio/product/crafted-1',
-            width: 1200,
-            height: 800,
-            alt: 'Professional product shot',
-            caption: 'Perfectly crafted products'
+            alt: 'Professional product shot'
           }
+        ],
+        features: [
+          { icon: '📸', title: 'Camera Used', value: 'Canon EOS 5D Mark IV', order: 1 },
+          { icon: '🔍', title: 'Lenses', value: 'Canon EF 100mm f/2.8L Macro IS USM', order: 2 },
+          { icon: '💡', title: 'Lighting', value: 'Softbox & Reflectors', order: 3 }
         ],
         specifications: [
           { icon: '📂', name: 'Category', value: 'Product', order: 1 },
           { icon: '💼', name: 'Project Type', value: 'Commercial', order: 2 },
-          { icon: '📸', name: 'Camera', value: 'Canon EOS 5D Mark IV', order: 3 },
-          { icon: '🔍', name: 'Lenses', value: 'Canon EF 100mm f/2.8L Macro IS USM', order: 4 },
-          { icon: '💡', name: 'Lighting', value: 'Softbox & Reflectors', order: 5 },
-          { icon: '📍', name: 'Location', value: 'Studio', order: 6 },
-          { icon: '📅', name: 'Time', value: 'January 2024', order: 7 }
+          { icon: '📍', name: 'Location', value: 'Studio', order: 3 },
+          { icon: '📅', name: 'Time', value: 'January 2024', order: 4 }
         ],
         actionButton: {
           text: 'Commercial Inquiry',
@@ -921,12 +842,6 @@ async function seedEnhancedData() {
           enabled: true,
           style: 'secondary'
         },
-        isPublished: true,
-        isFeatured: false,
-        viewCount: 156,
-        likes: 87,
-        location: 'Studio',
-        eventDate: new Date('2024-01-25'),
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -934,35 +849,24 @@ async function seedEnhancedData() {
         createdBy: adminUser, // Link album to admin user
         title: 'Wild Wonders',
         description: 'Wildlife and nature photography passion project capturing natural beauty',
-        projectGoal: 'To document and preserve the beauty of wildlife in their natural habitats, raising awareness about conservation while showcasing the incredible diversity of nature through powerful visual storytelling.',
-        category: 'Wildlife & Nature',
-        projectType: 'Passion Project',
         tags: ['Wildlife & Nature', 'Passion Project'],
-        coverImage: {
-          url: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/wildlife/wild-wonders-cover.jpg',
-          publicId: 'portfolio/wildlife/wild-wonders-cover',
-          width: 1200,
-          height: 800,
-          alt: 'Wild Wonders wildlife photography cover'
-        },
+        coverImage: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/wildlife/wild-wonders-cover.jpg',
         images: [
           {
             url: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/wildlife/wild-1.jpg',
-            publicId: 'portfolio/wildlife/wild-1',
-            width: 1200,
-            height: 800,
-            alt: 'Wildlife in natural habitat',
-            caption: 'Natural wonders of wildlife'
+            alt: 'Wildlife in natural habitat'
           }
+        ],
+        features: [
+          { icon: '📸', title: 'Camera Used', value: 'Nikon D850', order: 1 },
+          { icon: '🔍', title: 'Lenses', value: 'Nikon AF-S 600mm f/4E FL ED VR', order: 2 },
+          { icon: '🎒', title: 'Support', value: 'Gitzo Carbon Tripod', order: 3 }
         ],
         specifications: [
           { icon: '📂', name: 'Category', value: 'Wildlife & Nature', order: 1 },
           { icon: '❤️', name: 'Project Type', value: 'Passion Project', order: 2 },
-          { icon: '📸', name: 'Camera', value: 'Nikon D850', order: 3 },
-          { icon: '🔍', name: 'Lenses', value: 'Nikon AF-S 600mm f/4E FL ED VR', order: 4 },
-          { icon: '🎒', name: 'Support', value: 'Gitzo Carbon Tripod', order: 5 },
-          { icon: '📍', name: 'Location', value: 'Natural Reserves', order: 6 },
-          { icon: '📅', name: 'Time', value: 'February 2024', order: 7 }
+          { icon: '📍', name: 'Location', value: 'Natural Reserves', order: 3 },
+          { icon: '📅', name: 'Time', value: 'February 2024', order: 4 }
         ],
         actionButton: {
           text: 'Nature Prints',
@@ -970,8 +874,6 @@ async function seedEnhancedData() {
           enabled: true,
           style: 'primary'
         },
-
-        // YouTube video for wildlife project
         youtubeVideo: {
           videoId: 'nK96jdUfUJo',
           title: 'Wild Wonders - Nature Photography Adventure',
@@ -980,13 +882,6 @@ async function seedEnhancedData() {
           embedUrl: 'https://www.youtube.com/embed/nK96jdUfUJo',
           duration: '6:24'
         },
-
-        isPublished: true,
-        isFeatured: true,
-        viewCount: 278,
-        likes: 165,
-        location: 'Natural Reserves',
-        eventDate: new Date('2024-02-05'),
         createdAt: new Date(),
         updatedAt: new Date()
       }

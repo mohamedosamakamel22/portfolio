@@ -43,7 +43,6 @@ export class ProfileUpdateObjectsController {
         ...profile.hero,
         ...updateHeroDto
       };
-      console.log(updatedHero);
       // Update the profile with new hero data
       const updateData = { hero: updatedHero };
       const updatedProfile = await this.profileService.update("685fe192e9ad4407f2b52ce4", updateData);

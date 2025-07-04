@@ -6,10 +6,8 @@ export type ReviewDocument = Review & Document;
 @Schema({ timestamps: true })
 export class Review {
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User' })
-  reviewedBy?: MongooseSchema.Types.ObjectId; // The photographer being reviewed
+  userId?: MongooseSchema.Types.ObjectId; // The photographer being reviewed
 
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User' })
-  clientUserId?: MongooseSchema.Types.ObjectId; // Optional: if client is also a user
 
   @Prop({ required: true })
   clientName: string;
@@ -29,20 +27,6 @@ export class Review {
   @Prop({ required: true, min: 1, max: 5 })
   rating: number;
 
-  @Prop({ default: Date.now })
-  reviewDate: Date;
-
-  @Prop({ default: true })
-  isVisible: boolean;
-
-  @Prop({ default: false })
-  isFeatured: boolean;
-
-  @Prop()
-  projectType: string; // e.g., "Product Photography", "Event Photography", etc.
-
-  @Prop()
-  serviceUsed: string;
 }
 
 export const ReviewSchema = SchemaFactory.createForClass(Review); 

@@ -84,6 +84,7 @@ async function bootstrap() {
     .addTag('Website - Public Reviews', 'Public access to reviews')
     .addTag('Website - Public Albums', 'Public access to albums')
     .addTag('Website - Contact Form', 'Public contact form submission')
+    .addTag('Media Upload', 'File upload endpoints for images and videos')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

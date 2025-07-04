@@ -39,13 +39,11 @@ export class CloudinaryService {
         {
           folder: folder || 'portfolio',
           resource_type: 'auto',
-          quality: 'auto:best',
-          format: 'auto',
-          fetch_format: 'auto',
+          quality: 'auto',
           flags: 'progressive',
           transformation: [
             { width: 4000, height: 4000, crop: 'limit' },
-            { quality: 'auto:best' },
+            { quality: 'auto' }
           ],
         },
         (error, result) => {
@@ -70,13 +68,10 @@ export class CloudinaryService {
         {
           folder: folder || 'portfolio/videos',
           resource_type: 'video',
-          quality: 'auto:best',
-          format: 'auto',
-          video_codec: 'auto',
+          quality: 'auto',
           transformation: [
             { width: 1920, height: 1080, crop: 'limit' },
-            { quality: 'auto:best' },
-            { video_codec: 'h264' },
+            { quality: 'auto' }
           ],
         },
         (error, result) => {
