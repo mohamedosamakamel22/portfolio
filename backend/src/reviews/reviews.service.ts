@@ -16,7 +16,7 @@ export class ReviewsService {
   async create(createReviewDto: CreateReviewDto): Promise<Review> {
     const reviewData = {
       ...createReviewDto,
-      userId: createReviewDto.userId,
+      userId: "685fe192e9ad4407f2b52ce4",
     };
 
     const createdReview = new this.reviewModel(reviewData);

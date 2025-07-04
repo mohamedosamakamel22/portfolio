@@ -34,8 +34,7 @@ export class ReviewsController {
   ) { }
 
   @Post()
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(UserRole.ADMIN)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   create(@Body() createReviewDto: CreateReviewDto, @CurrentUser() user: any) {
     return this.reviewsService.create(createReviewDto);
