@@ -13,7 +13,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiTags, ApiBearerAuth, ApiQuery, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth, ApiQuery, ApiResponse, ApiParam } from '@nestjs/swagger';
 import { ReviewsService } from './reviews.service';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
 import { CreateReviewDto } from './dto/create-review.dto';
@@ -46,6 +46,18 @@ export class ReviewsController {
   @ApiResponse({ status: 200, description: 'Reviews retrieved successfully', type: [Review] })
   findAll(@Query('limit') limit: number = 10, @Query('page') page: number = 1) {
     return this.reviewsService.findAll(limit, page);
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiParam({ name: 'id', description: 'Review ID to delete' })
+  @ApiResponse({ status: 200, description: 'Review deleted successfully' })
+  @ApiResponse({ status: 404, description: 'Review not found' })
+  @ApiResponse({ status: 403, description: 'Forbidden - Admin access required' })
+  async remove(@Param('id') id: string) {
+    await this.reviewsService.remove(id);
+    return { message: 'Review deleted successfully' };
   }
 
 } 
