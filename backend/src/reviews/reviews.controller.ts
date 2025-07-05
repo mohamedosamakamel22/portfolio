@@ -11,6 +11,7 @@ import {
   UploadedFile,
   BadRequestException,
   UseGuards,
+  Put,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags, ApiBearerAuth, ApiQuery, ApiResponse, ApiParam } from '@nestjs/swagger';
@@ -46,6 +47,17 @@ export class ReviewsController {
   @ApiResponse({ status: 200, description: 'Reviews retrieved successfully', type: [Review] })
   findAll(@Query('limit') limit: number = 10, @Query('page') page: number = 1) {
     return this.reviewsService.findAll(limit, page);
+  }
+
+  @Put(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiParam({ name: 'id', description: 'Review ID to update' })
+  @ApiResponse({ status: 200, description: 'Review updated successfully', type: Review })
+  @ApiResponse({ status: 404, description: 'Review not found' })
+  @ApiResponse({ status: 403, description: 'Forbidden - Admin access required' })
+  async update(@Param('id') id: string, @Body() updateReviewDto: UpdateReviewDto) {
+    return this.reviewsService.update(id, updateReviewDto);
   }
 
   @Delete(':id')
