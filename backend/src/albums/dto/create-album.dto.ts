@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsBoolean, IsArray, ValidateNested, IsNotEmpty, IsUrl, MinLength, MaxLength, ArrayMaxSize, IsObject } from 'class-validator';
+import { IsString, IsOptional, IsBoolean, IsArray, ValidateNested, IsNotEmpty, IsUrl, MinLength, MaxLength, ArrayMaxSize, IsObject, IsNumber } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -66,7 +66,7 @@ class SpecificationDto {
 
   @ApiProperty({ example: 1, required: false })
   @IsOptional()
-  @IsString()
+  @IsNumber()
   order?: number;
 }
 
@@ -181,23 +181,23 @@ export class CreateAlbumDto {
   @MaxLength(50, { each: true })
   tags?: string[];
 
-  @ApiProperty({
-    example: [
-      {
-        icon: '📸',
-        title: 'Camera Used',
-        value: 'Fujifilm X-T4',
-        order: 1
-      }
-    ],
-    required: false
-  })
-  @IsOptional()
-  @IsArray()
-  @ArrayMaxSize(10)
-  @ValidateNested({ each: true })
-  @Type(() => FeatureDto)
-  features?: FeatureDto[];
+  // @ApiProperty({
+  //   example: [
+  //     {
+  //       icon: '📸',
+  //       title: 'Camera Used',
+  //       value: 'Fujifilm X-T4',
+  //       order: 1
+  //     }
+  //   ],
+  //   required: false
+  // })
+  // @IsOptional()
+  // @IsArray()
+  // @ArrayMaxSize(10)
+  // @ValidateNested({ each: true })
+  // @Type(() => FeatureDto)
+  // features?: FeatureDto[];
 
   @ApiProperty({
     example: [
@@ -249,9 +249,9 @@ export class CreateAlbumDto {
   @Type(() => YoutubeVideoDto)
   youtubeVideo?: YoutubeVideoDto;
 
-  @ApiProperty({ example: '507f1f77bcf86cd799439011', description: 'ID of the user who created the album', required: false })
-  @IsOptional()
-  @IsString()
-  @IsNotEmpty()
-  createdBy?: string;
+  // @ApiProperty({ example: '507f1f77bcf86cd799439011', description: 'ID of the user who created the album', required: false })
+  // @IsOptional()
+  // @IsString()
+  // @IsNotEmpty()
+  // createdBy?: string;
 } 

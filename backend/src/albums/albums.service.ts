@@ -14,7 +14,7 @@ export class AlbumsService {
   ) {}
 
   async create(createAlbumDto: CreateAlbumDto, userId?: string): Promise<Album> {
-    const finalUserId = createAlbumDto.createdBy || userId;
+    const finalUserId = "685fe192e9ad4407f2b52ce4";
     
     // Validate user ID before creating the album
     if (finalUserId) {
@@ -51,9 +51,9 @@ export class AlbumsService {
 
   async update(id: string, updateAlbumDto: UpdateAlbumDto): Promise<Album> {
     // Validate user ID if being updated
-    if (updateAlbumDto.createdBy) {
-      await this.userValidationService.validateUserExists(updateAlbumDto.createdBy, 'Album creator');
-    }
+    // if (updateAlbumDto.createdBy) {
+    //   await this.userValidationService.validateUserExists(updateAlbumDto.createdBy, 'Album creator');
+    // }
 
     const updatedAlbum = await this.albumModel
       .findByIdAndUpdate(id, updateAlbumDto, { new: true })
@@ -79,6 +79,46 @@ export class AlbumsService {
       .populate('createdBy', 'firstName lastName email profileImage')
       .sort({ createdAt: -1 })
       .exec();
+  }
+
+  async findWithFiltersAndPagination(
+    tags: string[] = [],
+    page: number = 1,
+    limit: number = 10
+  ): Promise<{
+    albums: Album[];
+    totalCount: number;
+    totalPages: number;
+    currentPage: number;
+    hasNextPage: boolean;
+    hasPrevPage: boolean;
+  }> {
+    const skip = (page - 1) * limit;
+    
+    // Build filter query
+    const filterQuery = tags.length > 0 ? { tags: { $in: tags } } : {};
+    
+    // Get total count for pagination
+    const totalCount = await this.albumModel.countDocuments(filterQuery);
+    
+    // Get albums with pagination
+    const albums = await this.albumModel
+      .find(filterQuery)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .exec();
+    
+    const totalPages = Math.ceil(totalCount / limit);
+    
+    return {
+      albums,
+      totalCount,
+      totalPages,
+      currentPage: page,
+      hasNextPage: page < totalPages,
+      hasPrevPage: page > 1,
+    };
   }
 
   async searchAlbums(query: string): Promise<Album[]> {

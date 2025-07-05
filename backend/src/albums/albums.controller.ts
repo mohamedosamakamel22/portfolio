@@ -14,7 +14,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
 import { AlbumsService } from './albums.service';
 import { CloudinaryService } from '../cloudinary/cloudinary.service';
 import { CreateAlbumDto } from './dto/create-album.dto';
@@ -24,6 +24,7 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { UserRole } from '../schemas/user.schema';
+import { FilterByTagDto } from './dto/filter-by-tag.dto';
 
 @ApiTags('Albums')
 @Controller('albums')
@@ -31,30 +32,34 @@ export class AlbumsController {
   constructor(
     private readonly albumsService: AlbumsService,
     private readonly cloudinaryService: CloudinaryService,
-  ) {}
+  ) { }
 
   @Post()
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(UserRole.ADMIN)
   @ApiBearerAuth()
   create(@Body() createAlbumDto: CreateAlbumDto, @CurrentUser() user: any) {
     return this.albumsService.create(createAlbumDto, user.userId);
   }
+  @Get('filter-by-tags')
+  findByTags(@Query() filterByTagDto: FilterByTagDto) {
+    const pageNum = filterByTagDto.page || 1;
+    const limitNum = filterByTagDto.limit || 10;
+    const tags = filterByTagDto.tags || [];
 
+    if (pageNum <= 0 || limitNum <= 0) {
+      throw new BadRequestException('Page and limit must be positive numbers');
+    }
+
+    const tagArray = tags;
+    return this.albumsService.findWithFiltersAndPagination(tagArray, pageNum, limitNum);
+  }
 
   @Get('tags')
   getAllTags() {
     return this.albumsService.getAllTags();
   }
 
-  @Get('filter-by-tags')
-  findByTags(@Query('tags') tags: string) {
-    if (!tags) {
-      throw new BadRequestException('Tags query parameter is required');
-    }
-    const tagArray = tags.split(',').map(tag => tag.trim());
-    return this.albumsService.findByTags(tagArray);
-  }
+
 
 
 
@@ -64,16 +69,14 @@ export class AlbumsController {
   }
 
   @Patch(':id')
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(UserRole.ADMIN)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   update(@Param('id') id: string, @Body() updateAlbumDto: UpdateAlbumDto) {
     return this.albumsService.update(id, updateAlbumDto);
   }
 
   @Delete(':id')
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(UserRole.ADMIN)
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   remove(@Param('id') id: string) {
     return this.albumsService.remove(id);

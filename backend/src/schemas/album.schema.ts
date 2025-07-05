@@ -33,8 +33,8 @@ export class Album {
   @Prop([String])
   tags: string[];
 
-  @Prop([Object])
-  features: Feature[];
+  // @Prop([Object])
+  // features: Feature[];
 
   // Album specifications/contract details with icon, name, and value
   @Prop([Object])
