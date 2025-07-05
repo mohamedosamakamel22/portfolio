@@ -13,7 +13,6 @@ import { SeedModule } from './seed/seed.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ContactModule } from './contact/contact.module';
-import { WebsiteModule } from './website/website.module';
 import { CommonModule } from './common/common.module';
 import { DatabaseIndexesService } from './database/database-indexes.service';
 import { MediaModule } from './media/media.module';
@@ -32,7 +31,7 @@ import { MediaModule } from './media/media.module';
     AlbumsModule,
     ContactModule,
     CloudinaryModule,
-    WebsiteModule,
+    // WebsiteModule,
     CommonModule,
     SeedModule,
     MediaModule,

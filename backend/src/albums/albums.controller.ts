@@ -59,10 +59,6 @@ export class AlbumsController {
     return this.albumsService.getAllTags();
   }
 
-
-
-
-
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.albumsService.findOne(id);
