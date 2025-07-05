@@ -552,6 +552,227 @@ class IFaqDto {
   isActive: boolean;
 }
 
+// Gear DTO
+class GearItemDto {
+  @ApiProperty({ 
+    example: 'Canon EOS R5',
+    description: 'Gear item title/name'
+  })
+  @IsString()
+  title: string;
+
+  @ApiProperty({ 
+    example: 'fas fa-camera',
+    description: 'Gear item icon (FontAwesome class)'
+  })
+  @IsString()
+  icon: string;
+
+  @ApiProperty({ 
+    example: 1,
+    description: 'Display order'
+  })
+  @IsNumber()
+  order: number;
+
+  @ApiProperty({ 
+    example: true,
+    description: 'Whether the gear item is active',
+    required: false
+  })
+  @IsOptional()
+  @IsBoolean()
+  isActive?: boolean;
+}
+
+class GearDto {
+  @ApiProperty({ 
+    example: 'Cameras',
+    description: 'Gear category title'
+  })
+  @IsString()
+  title: string;
+
+  @ApiProperty({ 
+    example: 1,
+    description: 'Display order'
+  })
+  @IsNumber()
+  order: number;
+
+  @ApiProperty({ 
+    example: 'Professional camera equipment',
+    description: 'Gear category subtitle'
+  })
+  @IsString()
+  subtitle: string;
+
+  @ApiProperty({
+    example: [
+      { title: 'Canon EOS R5', icon: 'fas fa-camera', order: 1, isActive: true },
+      { title: 'Sony A7S III', icon: 'fas fa-video', order: 2, isActive: true }
+    ],
+    description: 'Gear items in this category'
+  })
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => GearItemDto)
+  gearItems: GearItemDto[];
+
+  @ApiProperty({ 
+    example: true,
+    description: 'Whether the gear category is active'
+  })
+  @IsBoolean()
+  isActive: boolean;
+}
+
+class IGearDto {
+  @ApiProperty({ 
+    example: 'My Gear',
+    description: 'Gear section title'
+  })
+  @IsString()
+  title: string;
+
+  @ApiProperty({ 
+    example: 'Professional equipment I use',
+    description: 'Gear section subtitle'
+  })
+  @IsString()
+  subtitle: string;
+
+  @ApiProperty({
+    example: [
+      {
+        title: 'Cameras',
+        order: 1,
+        subtitle: 'Professional camera equipment',
+        isActive: true,
+        gearItems: [
+          { title: 'Canon EOS R5', icon: 'fas fa-camera', order: 1, isActive: true },
+          { title: 'Sony A7S III', icon: 'fas fa-video', order: 2, isActive: true }
+        ]
+      },
+      {
+        title: 'Audio',
+        order: 2,
+        subtitle: 'Professional audio equipment',
+        isActive: true,
+        gearItems: [
+          { title: 'Rode VideoMic Pro', icon: 'fas fa-microphone', order: 1, isActive: true },
+          { title: 'Audio-Technica AT4040', icon: 'fas fa-microphone-alt', order: 2, isActive: true }
+        ]
+      }
+    ],
+    description: 'Gear categories array'
+  })
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => GearDto)
+  gearSection: GearDto[];
+
+  @ApiProperty({ 
+    example: true,
+    description: 'Whether the gear section is active'
+  })
+  @IsBoolean()
+  isActive: boolean;
+}
+
+// About Button DTO
+class AboutButtonDto {
+  @ApiProperty({ 
+    example: 'Learn More',
+    description: 'Button text'
+  })
+  @IsString()
+  text: string;
+
+  @ApiProperty({ 
+    example: '/about-me',
+    description: 'Button URL'
+  })
+  @IsString()
+  url: string;
+
+  @ApiProperty({ 
+    example: true,
+    description: 'Whether the button is enabled'
+  })
+  @IsBoolean()
+  enabled: boolean;
+}
+
+class IAboutDto {
+  @ApiProperty({ 
+    example: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/about/about-me.jpg',
+    description: 'About section image URL'
+  })
+  @IsString()
+  aboutImage: string;
+
+  @ApiProperty({ 
+    example: 'I am a passionate photographer dedicated to capturing life\'s most precious moments.',
+    description: 'About description'
+  })
+  @IsString()
+  description: string;
+
+  @ApiProperty({ 
+    example: 'My journey started 15 years ago when I picked up my first camera...',
+    description: 'Journey story'
+  })
+  @IsString()
+  journey: string;
+
+  @ApiProperty({ 
+    example: 'What motivates me is the ability to freeze time and create lasting memories...',
+    description: 'Motivation text'
+  })
+  @IsString()
+  motivation: string;
+
+  @ApiProperty({ 
+    example: 'Let\'s work together to create something amazing!',
+    description: 'Ending text'
+  })
+  @IsString()
+  endingText: string;
+
+  @ApiProperty({ 
+    example: [
+      'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/about/gallery-1.jpg',
+      'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/about/gallery-2.jpg',
+      'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/about/gallery-3.jpg'
+    ],
+    description: 'Array of image URLs for the about section gallery',
+    type: [String]
+  })
+  @IsArray()
+  @IsString({ each: true })
+  images: string[];
+
+  @ApiProperty({ 
+    example: true,
+    description: 'Whether the about section is active'
+  })
+  @IsBoolean()
+  isActive: boolean;
+
+  @ApiProperty({
+    example: {
+      text: 'Learn More',
+      url: '/about-me',
+      enabled: true
+    },
+    description: 'About button configuration'
+  })
+  @ValidateNested()
+  @Type(() => AboutButtonDto)
+  button: AboutButtonDto;
+}
+
 // Social Media DTO
 class SocialMediaItemDto {
   @ApiProperty({ 
@@ -706,6 +927,33 @@ export class CreateProfileDto {
 
   @ApiProperty({ 
     example: {
+      aboutImage: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/about/about-me.jpg',
+      description: 'I am a passionate photographer dedicated to capturing life\'s most precious moments.',
+      journey: 'My journey started 15 years ago when I picked up my first camera...',
+      motivation: 'What motivates me is the ability to freeze time and create lasting memories...',
+      endingText: 'Let\'s work together to create something amazing!',
+      images: [
+        'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/about/gallery-1.jpg',
+        'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/about/gallery-2.jpg',
+        'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/about/gallery-3.jpg'
+      ],
+      isActive: true,
+      button: {
+        text: 'Learn More',
+        url: '/about-me',
+        enabled: true
+      }
+    },
+    required: false,
+    description: 'About section configuration'
+  })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => IAboutDto)
+  about?: IAboutDto;
+
+  @ApiProperty({ 
+    example: {
       videoId: 'dQw4w9WgXcQ',
       title: 'My Photography Journey',
       description: 'A glimpse into my photography journey and creative process',
@@ -837,6 +1085,42 @@ export class CreateProfileDto {
 
   @ApiProperty({ 
     example: {
+      title: 'My Gear',
+      subtitle: 'Professional equipment I use',
+      gearSection: [
+        {
+          title: 'Cameras',
+          order: 1,
+          subtitle: 'Professional camera equipment',
+          isActive: true,
+          gearItems: [
+            { title: 'Canon EOS R5', icon: 'fas fa-camera', order: 1, isActive: true },
+            { title: 'Sony A7S III', icon: 'fas fa-video', order: 2, isActive: true }
+          ]
+        },
+        {
+          title: 'Audio',
+          order: 2,
+          subtitle: 'Professional audio equipment',
+          isActive: true,
+          gearItems: [
+            { title: 'Rode VideoMic Pro', icon: 'fas fa-microphone', order: 1, isActive: true },
+            { title: 'Audio-Technica AT4040', icon: 'fas fa-microphone-alt', order: 2, isActive: true }
+          ]
+        }
+      ],
+      isActive: true
+    },
+    required: false,
+    description: 'Gear section configuration'
+  })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => IGearDto)
+  gear?: IGearDto;
+
+  @ApiProperty({ 
+    example: {
       isActive: true,
       socialMedia: [
         { icon: 'fab fa-instagram', url: 'https://instagram.com/saeedsekka', title: 'Instagram', order: 1 },
@@ -891,6 +1175,12 @@ export class ProfileResponseDto {
   hero: HeroSectionDto;
 
   @ApiProperty({
+    description: 'About section configuration',
+    required: false
+  })
+  about?: IAboutDto;
+
+  @ApiProperty({
     description: 'YouTube video configuration',
     required: false
   })
@@ -931,6 +1221,12 @@ export class ProfileResponseDto {
     required: false
   })
   faq?: IFaqDto;
+
+  @ApiProperty({
+    description: 'Gear section configuration',
+    required: false
+  })
+  gear?: IGearDto;
 
   @ApiProperty({
     description: 'Social media configuration',

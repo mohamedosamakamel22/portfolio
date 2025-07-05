@@ -39,6 +39,18 @@ export class ProfileObjectsController {
     return profile.hero;
   }
 
+  @Get('about')
+  @ApiOperation({ summary: 'Get about section ' })
+  @ApiResponse({ status: 200, description: 'About section retrieved successfully' })
+  @ApiResponse({ status: 404, description: 'Profile not found' })
+  async getAboutByUserId() {
+    const profile = await this.profileService.findOne("685fe192e9ad4407f2b52ce4");
+    if (!profile.about) {
+      throw new NotFoundException('About section not found for this user');
+    }
+    return profile.about;
+  }
+
   @Get('bio')
   @ApiOperation({ summary: 'Get bio section ' })
   @ApiResponse({ status: 200, description: 'Bio section retrieved successfully' })
@@ -111,6 +123,16 @@ export class ProfileObjectsController {
     return profile.socialMedia;
   }
 
-
+  @Get('gear')
+  @ApiOperation({ summary: 'Get gear section ' })
+  @ApiResponse({ status: 200, description: 'Gear section retrieved successfully' })
+  @ApiResponse({ status: 404, description: 'Profile not found' })
+  async getGearByUserId() {
+    const profile = await this.profileService.findOne("685fe192e9ad4407f2b52ce4");
+    if (!profile.gear) {
+      throw new NotFoundException('Gear section not found for this user');
+    }
+    return profile.gear;
+  }
 
 } 

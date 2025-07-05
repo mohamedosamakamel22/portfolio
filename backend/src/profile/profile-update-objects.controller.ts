@@ -15,6 +15,8 @@ import { UpdateExperienceDto } from './dto/update-experience.dto';
 import { UpdateServicesDto } from './dto/update-services.dto';
 import { UpdateFaqDto } from './dto/update-faq.dto';
 import { UpdateSocialMediaDto } from './dto/update-social-media.dto';
+import { UpdateGearDto } from './dto/update-gear.dto';
+import { UpdateAboutDto } from './dto/update-about.dto';
 
 @ApiTags('Profile Update Objects (CMS)')
 @Controller('profile-update-objects')
@@ -56,6 +58,43 @@ export class ProfileUpdateObjectsController {
         throw error;
       }
       throw new BadRequestException('Failed to update hero section');
+    }
+  }
+
+  @Put('about')
+  @ApiOperation({ summary: 'Update about section of a profile' })
+  @ApiBody({ type: UpdateAboutDto })
+  @ApiResponse({ status: 200, description: 'About section updated successfully' })
+  @ApiResponse({ status: 404, description: 'Profile not found' })
+  @ApiResponse({ status: 400, description: 'Bad request - invalid data' })
+  async updateAboutByUserId(
+    @Body() updateAboutDto: UpdateAboutDto
+  ) {
+    try {
+      const profile = await this.profileService.findOne("685fe192e9ad4407f2b52ce4");
+      if (!profile) {
+        throw new NotFoundException('Profile not found');
+      }
+
+      // Merge existing about data with updates
+      const updatedAbout = {
+        ...profile.about,
+        ...updateAboutDto
+      };
+
+      // Update the profile with new about data
+      const updateData = { about: updatedAbout };
+      const updatedProfile = await this.profileService.update("685fe192e9ad4407f2b52ce4", updateData);
+      
+      return {
+        message: 'About section updated successfully',
+        data: updatedProfile.about
+      };
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new BadRequestException('Failed to update about section');
     }
   }
 
@@ -315,6 +354,43 @@ export class ProfileUpdateObjectsController {
         throw error;
       }
       throw new BadRequestException('Failed to update social media section');
+    }
+  }
+
+  @Put('gear')
+  @ApiOperation({ summary: 'Update gear section of a profile' })
+  @ApiBody({ type: UpdateGearDto })
+  @ApiResponse({ status: 200, description: 'Gear section updated successfully' })
+  @ApiResponse({ status: 404, description: 'Profile not found' })
+  @ApiResponse({ status: 400, description: 'Bad request - invalid data' })
+  async updateGearByUserId(
+    @Body() updateGearDto: UpdateGearDto
+  ) {
+    try {
+      const profile = await this.profileService.findOne("685fe192e9ad4407f2b52ce4");
+      if (!profile) {
+        throw new NotFoundException('Profile not found');
+      }
+
+      // Merge existing gear data with updates
+      const updatedGear = {
+        ...profile.gear,
+        ...updateGearDto
+      };
+
+      // Update the profile with new gear data
+      const updateData = { gear: updatedGear };
+      const updatedProfile = await this.profileService.update("685fe192e9ad4407f2b52ce4", updateData);
+      
+      return {
+        message: 'Gear section updated successfully',
+        data: updatedProfile.gear
+      };
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new BadRequestException('Failed to update gear section');
     }
   }
 } 

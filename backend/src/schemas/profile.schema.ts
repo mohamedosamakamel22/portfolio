@@ -110,20 +110,20 @@ export interface BrandWorkedWith {
 
 // Interface for gear items
 export interface GearItem {
-    name: string;
-    model: string;
-    image?: string;
-    description?: string;
-    category?: string;
-    order?: number;
+    title: string;
+    icon: string;
+    order: number;
+    isActive?: boolean;
+
 }
 
 // Interface for gear
 export interface Gear {
-    cameras?: GearItem[];
-    lenses?: GearItem[];
-    accessories?: GearItem[];
-    editingTools?: GearItem[];
+    title: string;
+    order: number;
+    subtitle: string;
+    gearItems: GearItem[];
+    isActive: boolean;
 }
 
 // Interface for client benefits
@@ -203,6 +203,31 @@ export interface IFaq {
     isActive: boolean;
 }
 
+export interface IGear {
+    title: string;
+    subtitle: string;
+    gearSection: Gear[];
+    isActive: boolean;
+
+}
+
+export interface IAbout {
+    aboutImage: string;
+    description: string;
+    journey: string;
+    motivation: string;
+    endingText: string;
+    images: string[];
+    isActive: boolean;
+    button: {
+        text: string;
+        url: string;
+        enabled: boolean;
+    }
+}
+
+
+
 @Schema({ timestamps: true })
 export class Profile {
     @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User', required: true })
@@ -213,6 +238,10 @@ export class Profile {
 
     @Prop({ type: Object, required: true })
     hero: HeroSection;
+
+    // about
+    @Prop({ type: Object })
+    about: IAbout;
 
 
     @Prop({ type: Object })
@@ -232,6 +261,9 @@ export class Profile {
 
     @Prop({ type: Object })
     faq: IFaq;
+
+    @Prop({ type: Object })
+    gear: IGear;
 
     // Enhanced social media with full URLs
     @Prop({ type: Object })
