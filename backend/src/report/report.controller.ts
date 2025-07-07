@@ -65,7 +65,7 @@ export class ReportController {
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Delete a report' })
+   @ApiOperation({ summary: 'Delete a report' })
   @ApiParam({ name: 'id', description: 'Report ID' })
   @ApiResponse({ status: 204, description: 'The report has been successfully deleted.' })
   @ApiResponse({ status: 404, description: 'Report not found.' })
