@@ -14,7 +14,7 @@ export class ProfileObjectsController {
     private readonly profileService: ProfileService,
   ) { }
 
- 
+
 
   @Get('stats')
   @ApiOperation({ summary: 'Get stats section ' })
@@ -27,7 +27,7 @@ export class ProfileObjectsController {
     }
     return profile.stats;
   }
-  @Get('hero')  
+  @Get('hero')
   @ApiOperation({ summary: 'Get hero section ' })
   @ApiResponse({ status: 200, description: 'Hero section retrieved successfully' })
   @ApiResponse({ status: 404, description: 'Profile not found' })
@@ -120,7 +120,12 @@ export class ProfileObjectsController {
     if (!profile.socialMedia) {
       throw new NotFoundException('Social media section not found for this user');
     }
-    return profile.socialMedia;
+    return {
+      socialMedia: profile.socialMedia,
+      firstName: profile.hero.firstName,
+      lastName: profile.hero.lastName,
+      phone: profile.hero.phone,
+    };
   }
 
   @Get('gear')

@@ -44,6 +44,22 @@ export class UpdateAboutDto {
   @IsOptional()
   @IsString()
   description?: string;
+  @ApiProperty({ 
+    example: 'Photograpgher',
+    description: 'Title',
+    required: false
+  })
+  @IsOptional()
+  @IsString()
+  title?: string;
+  @ApiProperty({ 
+    example: 'i am photographer.',
+    description: 'subtitle',
+    required: false
+  })
+  @IsOptional()
+  @IsString()
+  subtitle?: string;
 
   @ApiProperty({ 
     example: 'My journey started 15 years ago when I picked up my first camera...',

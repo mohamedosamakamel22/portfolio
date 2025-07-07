@@ -13,9 +13,11 @@ import { SeedModule } from './seed/seed.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ContactModule } from './contact/contact.module';
+import { ReportModule } from './report/report.module';
 import { CommonModule } from './common/common.module';
 import { DatabaseIndexesService } from './database/database-indexes.service';
 import { MediaModule } from './media/media.module';
+import { LogsModule } from './logs/logs.module';
 
 @Module({
   imports: [
@@ -30,6 +32,8 @@ import { MediaModule } from './media/media.module';
     ReviewsModule,
     AlbumsModule,
     ContactModule,
+    ReportModule,
+    LogsModule,
     CloudinaryModule,
     // WebsiteModule,
     CommonModule,

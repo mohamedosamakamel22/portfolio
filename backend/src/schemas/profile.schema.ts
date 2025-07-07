@@ -212,6 +212,8 @@ export interface IGear {
 }
 
 export interface IAbout {
+    title:string;
+    subtitle:string
     aboutImage: string;
     description: string;
     journey: string;
