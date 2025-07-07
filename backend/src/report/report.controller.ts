@@ -47,7 +47,7 @@ export class ReportController {
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Get a report by ID' })
+     @ApiOperation({ summary: 'Get a report by ID' })
   @ApiParam({ name: 'id', description: 'Report ID' })
   @ApiResponse({ status: 200, description: 'The report details.' })
   @ApiResponse({ status: 404, description: 'Report not found.' })
