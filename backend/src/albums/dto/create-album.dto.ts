@@ -76,65 +76,30 @@ class ActionButtonDto {
   @IsNotEmpty()
   @MinLength(1)
   @MaxLength(50)
-  text: string;
+  @IsOptional()
+  text?: string;
 
   @ApiProperty({ example: 'https://prints.saeedseka.com/colorful-india' })
   @IsString()
   @IsNotEmpty()
   @IsUrl()
-  url: string;
+  @IsOptional()
+  url?: string;
 
   @ApiProperty({ example: true })
   @IsBoolean()
-  enabled: boolean;
+  @IsOptional()
+  enabled?: boolean;
 
   @ApiProperty({ example: 'primary', required: false })
   @IsOptional()
   @IsString()
   @MaxLength(20)
+  @IsOptional()
   style?: string;
 }
 
-class YoutubeVideoDto {
-  @ApiProperty({ example: 'YqeW9_5kURI' })
-  @IsString()
-  @IsNotEmpty()
-  @MinLength(1)
-  @MaxLength(20)
-  videoId: string;
 
-  @ApiProperty({ example: 'Colorful India - Behind the Scenes' })
-  @IsString()
-  @IsNotEmpty()
-  @MinLength(1)
-  @MaxLength(200)
-  title: string;
-
-  @ApiProperty({ example: 'Take a journey behind the scenes of our collaborative travel photography project in India, capturing the vibrant street life and cultural diversity.' })
-  @IsString()
-  @IsNotEmpty()
-  @MinLength(1)
-  @MaxLength(1000)
-  description: string;
-
-  @ApiProperty({ example: 'https://img.youtube.com/vi/YqeW9_5kURI/maxresdefault.jpg' })
-  @IsString()
-  @IsNotEmpty()
-  @IsUrl()
-  thumbnail: string;
-
-  @ApiProperty({ example: 'https://www.youtube.com/embed/YqeW9_5kURI' })
-  @IsString()
-  @IsNotEmpty()
-  @IsUrl()
-  embedUrl: string;
-
-  @ApiProperty({ example: '4:32', required: false })
-  @IsOptional()
-  @IsString()
-  @MaxLength(10)
-  duration?: string;
-}
 
 export class CreateAlbumDto {
   @ApiProperty({ example: 'Colorful India' })
@@ -233,21 +198,13 @@ export class CreateAlbumDto {
   actionButton?: ActionButtonDto;
 
   @ApiProperty({
-    example: {
-      videoId: 'YqeW9_5kURI',
-      title: 'Colorful India - Behind the Scenes',
-      description: 'Take a journey behind the scenes of our collaborative travel photography project in India, capturing the vibrant street life and cultural diversity.',
-      thumbnail: 'https://img.youtube.com/vi/YqeW9_5kURI/maxresdefault.jpg',
-      embedUrl: 'https://www.youtube.com/embed/YqeW9_5kURI',
-      duration: '4:32'
-    },
+    example: 'https://www.youtube.com/watch?v=YqeW9_5kURI',
     required: false
   })
   @IsOptional()
-  @IsObject()
-  @ValidateNested()
-  @Type(() => YoutubeVideoDto)
-  youtubeVideo?: YoutubeVideoDto;
+  @IsString()
+  @IsUrl()
+  youtubeVideo?: string;
 
   // @ApiProperty({ example: '507f1f77bcf86cd799439011', description: 'ID of the user who created the album', required: false })
   // @IsOptional()
