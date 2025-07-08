@@ -1,4 +1,4 @@
-import { IsString, IsBoolean, IsArray, ValidateNested, IsOptional, IsNumber } from 'class-validator';
+import { IsString, IsBoolean, IsArray, ValidateNested, IsOptional, IsNumber, IsEmail } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -34,6 +34,25 @@ class SocialMediaItemDto {
 }
 
 export class UpdateSocialMediaDto {
+
+  @ApiProperty({
+    example: 'saeed@example.com',
+    description: 'Email address',
+    required: false
+  })
+  @IsOptional()
+  @IsEmail()
+  email?: string;
+
+  @ApiProperty({
+    example: '+966-53-868-3923',
+    description: 'Phone number',
+    required: false
+  })
+  @IsOptional()
+  @IsString()
+  phone?: string;
+
   @ApiProperty({ 
     example: true,
     description: 'Whether the social media section is active',

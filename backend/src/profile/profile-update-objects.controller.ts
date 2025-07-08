@@ -337,6 +337,8 @@ export class ProfileUpdateObjectsController {
 
       // Merge existing social media data with updates
       const updatedSocialMedia = {
+        email: profile.hero.email || updateSocialMediaDto.email,
+        phone: profile.hero.phone || updateSocialMediaDto.phone,
         ...profile.socialMedia,
         ...updateSocialMediaDto
       };
