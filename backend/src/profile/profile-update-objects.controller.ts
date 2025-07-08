@@ -48,7 +48,7 @@ export class ProfileUpdateObjectsController {
       // Update the profile with new hero data
       const updateData = { hero: updatedHero };
       const updatedProfile = await this.profileService.update("685fe192e9ad4407f2b52ce4", updateData);
-      
+
       return {
         message: 'Hero section updated successfully',
         data: updatedProfile.hero
@@ -85,7 +85,7 @@ export class ProfileUpdateObjectsController {
       // Update the profile with new about data
       const updateData = { about: updatedAbout };
       const updatedProfile = await this.profileService.update("685fe192e9ad4407f2b52ce4", updateData);
-      
+
       return {
         message: 'About section updated successfully',
         data: updatedProfile.about
@@ -122,7 +122,7 @@ export class ProfileUpdateObjectsController {
       // Update the profile with new stats data
       const updateData = { stats: updatedStats };
       const updatedProfile = await this.profileService.update("685fe192e9ad4407f2b52ce4", updateData);
-      
+
       return {
         message: 'Stats section updated successfully',
         data: updatedProfile.stats
@@ -159,7 +159,7 @@ export class ProfileUpdateObjectsController {
       // Update the profile with new bio data
       const updateData = { bio: updatedBio };
       const updatedProfile = await this.profileService.update("685fe192e9ad4407f2b52ce4", updateData);
-      
+
       return {
         message: 'Bio section updated successfully',
         data: updatedProfile.bio
@@ -196,7 +196,7 @@ export class ProfileUpdateObjectsController {
       // Update the profile with new brands data
       const updateData = { brands: updatedBrands };
       const updatedProfile = await this.profileService.update("685fe192e9ad4407f2b52ce4", updateData);
-      
+
       return {
         message: 'Brands section updated successfully',
         data: updatedProfile.brands
@@ -233,7 +233,7 @@ export class ProfileUpdateObjectsController {
       // Update the profile with new experience data
       const updateData = { experience: updatedExperience };
       const updatedProfile = await this.profileService.update("685fe192e9ad4407f2b52ce4", updateData);
-      
+
       return {
         message: 'Experience section updated successfully',
         data: updatedProfile.experience
@@ -270,7 +270,7 @@ export class ProfileUpdateObjectsController {
       // Update the profile with new services data
       const updateData = { services: updatedServices };
       const updatedProfile = await this.profileService.update("685fe192e9ad4407f2b52ce4", updateData);
-      
+
       return {
         message: 'Services section updated successfully',
         data: updatedProfile.services
@@ -307,7 +307,7 @@ export class ProfileUpdateObjectsController {
       // Update the profile with new FAQ data
       const updateData = { faq: updatedFaq };
       const updatedProfile = await this.profileService.update("685fe192e9ad4407f2b52ce4", updateData);
-      
+
       return {
         message: 'FAQ section updated successfully',
         data: updatedProfile.faq
@@ -337,16 +337,17 @@ export class ProfileUpdateObjectsController {
 
       // Merge existing social media data with updates
       const updatedSocialMedia = {
-        email: profile.hero.email || updateSocialMediaDto.email,
-        phone: profile.hero.phone || updateSocialMediaDto.phone,
         ...profile.socialMedia,
         ...updateSocialMediaDto
       };
 
+      const updateData = { socialMedia: updatedSocialMedia, hero: { ...profile.hero, email: updateSocialMediaDto.email || profile.hero.email, phone: updateSocialMediaDto.phone || profile.hero.phone } };
+      delete updateData.socialMedia.email;
+      delete updateData.socialMedia.phone;
+
       // Update the profile with new social media data
-      const updateData = { socialMedia: updatedSocialMedia };
       const updatedProfile = await this.profileService.update("685fe192e9ad4407f2b52ce4", updateData);
-      
+
       return {
         message: 'Social media section updated successfully',
         data: updatedProfile.socialMedia
@@ -383,7 +384,7 @@ export class ProfileUpdateObjectsController {
       // Update the profile with new gear data
       const updateData = { gear: updatedGear };
       const updatedProfile = await this.profileService.update("685fe192e9ad4407f2b52ce4", updateData);
-      
+
       return {
         message: 'Gear section updated successfully',
         data: updatedProfile.gear
