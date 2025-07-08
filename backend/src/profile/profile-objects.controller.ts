@@ -125,6 +125,7 @@ export class ProfileObjectsController {
       firstName: profile.hero.firstName,
       lastName: profile.hero.lastName,
       phone: profile.hero.phone,
+      email: profile.hero.email,
     };
   }
 

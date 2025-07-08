@@ -8,6 +8,7 @@ export interface HeroSection {
     firstName: string;
     lastName: string;
     phone: string;
+    email?: string;
     address: string;
     profileImage: string;
     coverImage: string;

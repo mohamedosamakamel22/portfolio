@@ -46,6 +46,15 @@ class HeroSectionDto {
   phone: string;
 
   @ApiProperty({ 
+    example: 'saeed@example.com',
+    description: 'Email address',
+    required: false
+  })
+  @IsOptional()
+  @IsString()
+  email?: string;
+
+  @ApiProperty({ 
     example: 'Riyadh, Saudi Arabia',
     description: 'Address or location'
   })
@@ -912,6 +921,7 @@ export class CreateProfileDto {
       firstName: 'Saeed',
       lastName: 'Sekka',
       phone: '+966-53-868-3923',
+      email: 'saeed@example.com',
       address: 'Riyadh, Saudi Arabia',
       profileImage: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/profile/saeed-main.jpg',
       coverImage: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/cover/saeed-cover.jpg',
