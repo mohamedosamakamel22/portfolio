@@ -55,6 +55,53 @@ export class CloudinaryService {
     });
   }
 
+  async uploadLargeImage(
+    file: Express.Multer.File,
+    options: {
+      folder?: string;
+      quality?: string;
+      maxWidth?: number;
+      maxHeight?: number;
+    } = {},
+  ): Promise<UploadApiResponse | UploadApiErrorResponse> {
+    const { folder, quality, maxWidth, maxHeight } = options;
+    
+    return new Promise((resolve, reject) => {
+      cloudinary.uploader.upload_stream(
+        {
+          folder: folder || 'portfolio/high-res',
+          resource_type: 'image',
+          quality: quality || 'auto',
+          flags: ['progressive', 'strip_profile'],
+          transformation: [
+            { 
+              width: maxWidth || 4000, 
+              height: maxHeight || 4000, 
+              crop: 'limit',
+              format: 'auto',
+              quality: quality || 'auto:good'
+            },
+            { 
+              flags: 'progressive'
+            }
+          ],
+          // Enhanced settings for large images
+          eager: [
+            { width: 1920, height: 1080, crop: 'limit', quality: 'auto:good' },
+            { width: 1200, height: 800, crop: 'limit', quality: 'auto:good' },
+            { width: 800, height: 600, crop: 'limit', quality: 'auto:good' }
+          ],
+          eager_async: true,
+        },
+        (error, result) => {
+          if (error) return reject(error);
+          if (!result) return reject(new Error('Large image upload failed'));
+          resolve(result);
+        },
+      ).end(file.buffer);
+    });
+  }
+
   async deleteImage(publicId: string): Promise<any> {
     return cloudinary.uploader.destroy(publicId);
   }
