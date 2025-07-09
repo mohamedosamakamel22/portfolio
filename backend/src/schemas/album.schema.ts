@@ -58,15 +58,16 @@ export class Album {
   };
 
   // YouTube video integration for albums
-  @Prop({ type: Object })
-  youtubeVideo?: {
+  @Prop({ type: String })
+  youtubeVideo?: string;
+  /* youtubeVideo?: {
     videoId: string; // YouTube video ID
     title: string; // Video title
     description: string; // Video description
     thumbnail: string; // Video thumbnail URL
     embedUrl: string; // YouTube embed URL
     duration?: string; // Video duration (optional)
-  };
+  }; */
 }
 
 export const AlbumSchema = SchemaFactory.createForClass(Album);
