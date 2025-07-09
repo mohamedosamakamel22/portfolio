@@ -29,4 +29,9 @@ export class Review {
 
 }
 
-export const ReviewSchema = SchemaFactory.createForClass(Review); 
+export const ReviewSchema = SchemaFactory.createForClass(Review);
+
+// Add indexes for better query performance
+ReviewSchema.index({ userId: 1 });
+ReviewSchema.index({ rating: -1 });
+ReviewSchema.index({ createdAt: -1 }); 

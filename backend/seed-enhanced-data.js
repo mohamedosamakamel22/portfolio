@@ -104,7 +104,7 @@ async function seedEnhancedData() {
         url: '/contact',
         enabled: true,
         style: 'primary',
-        icon: '📸'
+        icon: { type: 'emoji', value: '📸' }
       },
       
       // More About Me button configuration
@@ -116,12 +116,12 @@ async function seedEnhancedData() {
 
       // Brands worked with - array of brand icons
       brandsWorkedWith: [
-        { name: 'Canon', icon: '📷', url: 'https://canon.com', order: 1 },
-        { name: 'Adobe', icon: '🎨', url: 'https://adobe.com', order: 2 },
-        { name: 'Lightroom', icon: '📸', url: 'https://lightroom.adobe.com', order: 3 },
-        { name: 'DJI', icon: '🚁', url: 'https://dji.com', order: 4 },
-        { name: 'Fujifilm', icon: '📹', url: 'https://fujifilm.com', order: 5 },
-        { name: 'National Geographic', icon: '🌍', url: 'https://nationalgeographic.com', order: 6 }
+        { name: 'Canon', icon: { type: 'emoji', value: '📷' }, url: 'https://canon.com', order: 1 },
+        { name: 'Adobe', icon: { type: 'emoji', value: '🎨' }, url: 'https://adobe.com', order: 2 },
+        { name: 'Lightroom', icon: { type: 'emoji', value: '📸' }, url: 'https://lightroom.adobe.com', order: 3 },
+        { name: 'DJI', icon: { type: 'emoji', value: '🚁' }, url: 'https://dji.com', order: 4 },
+        { name: 'Fujifilm', icon: { type: 'emoji', value: '📹' }, url: 'https://fujifilm.com', order: 5 },
+        { name: 'National Geographic', icon: { type: 'emoji', value: '🌍' }, url: 'https://nationalgeographic.com', order: 6 }
       ],
 
       // Contact Information - Exact from website
@@ -157,13 +157,13 @@ async function seedEnhancedData() {
 
       // Services - Exact from website
       services: [
-        { name: 'Event Photography', icon: '📸', description: 'Tell powerful stories through our event photography, capturing real-life events and moments.' },
-        { name: 'Aerial Photography', icon: '🚁', description: 'Get a bird\'s-eye view with stunning aerial photography captured via drones, perfect for real estate, events, and landscapes.' },
-        { name: 'Corporate Photography', icon: '👔', description: 'Enhance your brand image with professional corporate photography for headshots, team photos, and company events.' },
-        { name: 'Editorial Photography', icon: '📰', description: 'Bring your stories to life with compelling editorial photography for magazines, blogs, and publications.' },
-        { name: 'Photography', icon: '📷', description: 'Professional photography services with artistic vision' },
-        { name: 'Photo Editing', icon: '✨', description: 'Professional photo editing and post-processing' },
-        { name: 'Designer', icon: '🎨', description: 'Creative design solutions for various needs' }
+        { name: 'Event Photography', icon: { type: 'emoji', value: '📸' }, description: 'Tell powerful stories through our event photography, capturing real-life events and moments.' },
+        { name: 'Aerial Photography', icon: { type: 'emoji', value: '🚁' }, description: 'Get a bird\'s-eye view with stunning aerial photography captured via drones, perfect for real estate, events, and landscapes.' },
+        { name: 'Corporate Photography', icon: { type: 'emoji', value: '👔' }, description: 'Enhance your brand image with professional corporate photography for headshots, team photos, and company events.' },
+        { name: 'Editorial Photography', icon: { type: 'emoji', value: '📰' }, description: 'Bring your stories to life with compelling editorial photography for magazines, blogs, and publications.' },
+        { name: 'Photography', icon: { type: 'emoji', value: '📷' }, description: 'Professional photography services with artistic vision' },
+        { name: 'Photo Editing', icon: { type: 'emoji', value: '✨' }, description: 'Professional photo editing and post-processing' },
+        { name: 'Designer', icon: { type: 'emoji', value: '🎨' }, description: 'Creative design solutions for various needs' }
       ],
 
       // EXPERIENCE - Exact from website
@@ -239,12 +239,12 @@ async function seedEnhancedData() {
       socialMedia: {
         isActive: true,
         socialMedia: [
-          { icon: 'fab fa-instagram', url: 'https://instagram.com/saeedsekka', title: 'Instagram', order: 1 },
-          { icon: 'fab fa-facebook', url: 'https://facebook.com/saeedsekka', title: 'Facebook', order: 2 },
-          { icon: 'fab fa-twitter', url: 'https://twitter.com/saeed_sekka', title: 'Twitter', order: 3 },
-          { icon: 'fab fa-linkedin', url: 'https://linkedin.com/in/saeed-sekka', title: 'LinkedIn', order: 4 },
-          { icon: 'fab fa-youtube', url: 'https://youtube.com/@saeedsekka', title: 'YouTube', order: 5 },
-          { icon: 'fab fa-tiktok', url: 'https://tiktok.com/@saeedsekka', title: 'TikTok', order: 6 }
+          { icon: { type: 'fontawesome', value: 'fab fa-instagram' }, url: 'https://instagram.com/saeedsekka', title: 'Instagram', order: 1 },
+          { icon: { type: 'fontawesome', value: 'fab fa-facebook' }, url: 'https://facebook.com/saeedsekka', title: 'Facebook', order: 2 },
+          { icon: { type: 'fontawesome', value: 'fab fa-twitter' }, url: 'https://twitter.com/saeed_sekka', title: 'Twitter', order: 3 },
+          { icon: { type: 'fontawesome', value: 'fab fa-linkedin' }, url: 'https://linkedin.com/in/saeed-sekka', title: 'LinkedIn', order: 4 },
+          { icon: { type: 'fontawesome', value: 'fab fa-youtube' }, url: 'https://youtube.com/@saeedsekka', title: 'YouTube', order: 5 },
+          { icon: { type: 'fontawesome', value: 'fab fa-tiktok' }, url: 'https://tiktok.com/@saeedsekka', title: 'TikTok', order: 6 }
         ]
       },
 
@@ -394,19 +394,19 @@ async function seedEnhancedData() {
         {
           title: 'Creative Vision',
           description: 'Bringing unique artistic perspective to every project with innovative composition and lighting techniques.',
-          icon: '🎨',
+          icon: { type: 'emoji', value: '🎨' },
           order: 1
         },
         {
           title: 'Technical Expertise',
           description: 'Mastery of professional equipment and post-processing techniques to deliver exceptional image quality.',
-          icon: '⚡',
+          icon: { type: 'emoji', value: '⚡' },
           order: 2
         },
         {
           title: 'Collaborative Approach',
           description: 'Working closely with clients to understand their vision and exceed their expectations.',
-          icon: '🤝',
+          icon: { type: 'emoji', value: '🤝' },
           order: 3
         }
       ],
@@ -416,19 +416,19 @@ async function seedEnhancedData() {
         {
           title: 'Discovery & Planning',
           description: 'Understanding your needs, vision, and goals to create the perfect photography strategy.',
-          icon: '🔍',
+          icon: { type: 'emoji', value: '🔍' },
           order: 1
         },
         {
           title: 'Creative Execution',
           description: 'Applying technical expertise and artistic vision to capture stunning, meaningful images.',
-          icon: '📸',
+          icon: { type: 'emoji', value: '📸' },
           order: 2
         },
         {
           title: 'Professional Delivery',
           description: 'Careful post-processing and timely delivery of high-quality final images.',
-          icon: '🎯',
+          icon: { type: 'emoji', value: '🎯' },
           order: 3
         }
       ],
@@ -457,7 +457,7 @@ async function seedEnhancedData() {
               }
             ]
           },
-          icon: '📅',
+          icon: { type: 'emoji', value: '📅' },
           category: 'Booking',
           order: 1,
           isVisible: true
@@ -478,7 +478,7 @@ async function seedEnhancedData() {
               }
             ]
           },
-          icon: '💰',
+          icon: { type: 'emoji', value: '💰' },
           category: 'Pricing',
           order: 2,
           isVisible: true
@@ -705,16 +705,16 @@ async function seedEnhancedData() {
           }
         ],
         features: [
-          { icon: '📸', title: 'Camera Used', value: 'Fujifilm X-T4', order: 1 },
-          { icon: '🔍', title: 'Lenses', value: 'Fujinon XF 23mm f/1.4 R, Fujinon XF 35mm f/2 R WR', order: 2 },
-          { icon: '🚁', title: 'Other Devices', value: 'Mavic Air', order: 3 }
+          { icon: { type: 'emoji', value: '📸' }, title: 'Camera Used', value: 'Fujifilm X-T4', order: 1 },
+          { icon: { type: 'emoji', value: '🔍' }, title: 'Lenses', value: 'Fujinon XF 23mm f/1.4 R, Fujinon XF 35mm f/2 R WR', order: 2 },
+          { icon: { type: 'emoji', value: '🚁' }, title: 'Other Devices', value: 'Mavic Air', order: 3 }
         ],
         specifications: [
-          { icon: '📂', name: 'Category', value: 'Travel', order: 1 },
-          { icon: '🤝', name: 'Project Type', value: 'Collaboration', order: 2 },
-          { icon: '📍', name: 'Location', value: 'India', order: 3 },
-          { icon: '📅', name: 'Time', value: 'April 2024', order: 4 },
-          { icon: '🏢', name: 'Client', value: 'India Tourism', order: 5 }
+          { icon: { type: 'emoji', value: '📂' }, name: 'Category', value: 'Travel', order: 1 },
+          { icon: { type: 'emoji', value: '🤝' }, name: 'Project Type', value: 'Collaboration', order: 2 },
+          { icon: { type: 'emoji', value: '📍' }, name: 'Location', value: 'India', order: 3 },
+          { icon: { type: 'emoji', value: '📅' }, name: 'Time', value: 'April 2024', order: 4 },
+          { icon: { type: 'emoji', value: '🏢' }, name: 'Client', value: 'India Tourism', order: 5 }
         ],
         actionButton: {
           text: 'Buy Prints',

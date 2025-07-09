@@ -2,6 +2,9 @@ import { IsString, IsOptional, IsBoolean, IsArray, ValidateNested, IsNotEmpty, I
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
+// Type for icons that can be either string or object with type and value
+export type IconType = string | { type: string; value: string };
+
 class ImageDto {
   @ApiProperty({ example: 'https://res.cloudinary.com/egyptismycountry/image/upload/v1/portfolio/travel/india-1.jpg' })
   @IsString()
@@ -18,10 +21,8 @@ class ImageDto {
 
 class FeatureDto {
   @ApiProperty({ example: '📸' })
-  @IsString()
-  @IsNotEmpty()
-  @MaxLength(10)
-  icon: string;
+  @IsOptional()
+  icon: IconType;
 
   @ApiProperty({ example: 'Camera Used' })
   @IsString()
@@ -45,10 +46,8 @@ class FeatureDto {
 
 class SpecificationDto {
   @ApiProperty({ example: '📂' })
-  @IsString()
-  @IsNotEmpty()
-  @MaxLength(10)
-  icon: string;
+  @IsOptional()
+  icon: IconType;
 
   @ApiProperty({ example: 'Category' })
   @IsString()
@@ -206,9 +205,11 @@ export class CreateAlbumDto {
   @IsUrl()
   youtubeVideo?: string;
 
-  // @ApiProperty({ example: '507f1f77bcf86cd799439011', description: 'ID of the user who created the album', required: false })
-  // @IsOptional()
-  // @IsString()
-  // @IsNotEmpty()
-  // createdBy?: string;
+
+
+  @ApiProperty({ example: '685fe192e9ad4407f2b52ce4', description: 'ID of the user who created the album', required: false })
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  userId: string = "685fe192e9ad4407f2b52ce4";
 } 

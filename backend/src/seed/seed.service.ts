@@ -252,6 +252,7 @@ export class SeedService {
           isPublished: true,
           isFeatured: true,
           sortOrder: 1,
+          userId: '685fe192e9ad4407f2b52ce4',
         },
         {
           title: 'Echoes of Dreams',
@@ -262,6 +263,7 @@ export class SeedService {
           isPublished: true,
           isFeatured: true,
           sortOrder: 2,
+          userId: '685fe192e9ad4407f2b52ce4',
         },
         {
           title: 'Wings of Freedom',
@@ -272,6 +274,7 @@ export class SeedService {
           isPublished: true,
           isFeatured: false,
           sortOrder: 3,
+          userId: '685fe192e9ad4407f2b52ce4',
         },
         {
           title: 'Crafted Perfection',
@@ -282,6 +285,7 @@ export class SeedService {
           isPublished: true,
           isFeatured: false,
           sortOrder: 4,
+          userId: '685fe192e9ad4407f2b52ce4',
         },
         {
           title: 'Wild Wonders',
@@ -292,6 +296,7 @@ export class SeedService {
           isPublished: true,
           isFeatured: false,
           sortOrder: 5,
+          userId: '685fe192e9ad4407f2b52ce4',
         },
       ];
 

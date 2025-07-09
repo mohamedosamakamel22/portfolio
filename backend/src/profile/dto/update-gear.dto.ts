@@ -2,6 +2,9 @@ import { IsString, IsBoolean, IsArray, ValidateNested, IsOptional, IsNumber } fr
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
+// Type for icons that can be either string or object with type and value
+export type IconType = string | { type: string; value: string };
+
 // Gear Item DTO
 class GearItemDto {
   @ApiProperty({ 
@@ -13,10 +16,10 @@ class GearItemDto {
 
   @ApiProperty({ 
     example: 'fas fa-camera',
-    description: 'Gear item icon (FontAwesome class)'
+    description: 'Gear item icon (FontAwesome class) - can be string or object with type and value'
   })
-  @IsString()
-  icon: string;
+  @IsOptional()
+  icon: IconType;
 
   @ApiProperty({ 
     example: 1,

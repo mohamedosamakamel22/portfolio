@@ -1,15 +1,18 @@
-import { IsString, IsBoolean, IsArray, ValidateNested, IsOptional, IsNumber, IsEmail } from 'class-validator';
+import { IsString, IsBoolean, IsArray, ValidateNested, IsOptional, IsNumber, IsEmail, IsObject } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
+
+// Type for icons that can be either string or object with type and value
+export type IconType = string | { type: string; value: string };
 
 // Social Media Item DTO
 class SocialMediaItemDto {
   @ApiProperty({ 
     example: 'fab fa-instagram',
-    description: 'Social media icon class or URL'
+    description: 'Social media icon class or URL - can be string or object with type and value'
   })
-  @IsString()
-  icon: string;
+  @IsOptional()
+  icon: IconType;
 
   @ApiProperty({ 
     example: 'https://instagram.com/saeedsekka',

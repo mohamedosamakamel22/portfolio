@@ -37,4 +37,8 @@ export class Report {
 
 }
 
-export const ReportSchema = SchemaFactory.createForClass(Report); 
+export const ReportSchema = SchemaFactory.createForClass(Report);
+
+// Add indexes for better query performance
+ReportSchema.index({ userId: 1 });
+ReportSchema.index({ createdAt: -1 }); 

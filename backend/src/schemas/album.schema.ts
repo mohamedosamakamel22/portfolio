@@ -1,8 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 
+// Type for icons that can be either string or object with type and value
+export type IconType = string | { type: string; value: string };
+
 export interface Feature {
-  icon: string;
+  icon: IconType;
   title: string;
   value: string;
   order: number;
@@ -13,7 +16,7 @@ export type AlbumDocument = Album & Document;
 @Schema({ timestamps: true })
 export class Album {
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User', required: true })
-  createdBy: MongooseSchema.Types.ObjectId;
+  userId: MongooseSchema.Types.ObjectId;
 
   @Prop({ required: true })
   title: string;
@@ -39,7 +42,7 @@ export class Album {
   // Album specifications/contract details with icon, name, and value
   @Prop([Object])
   specifications: Array<{
-    icon: string; // Icon name or emoji
+    icon: IconType; // Icon name or emoji
     name: string; // e.g., "Category", "Project Type", "Camera", "Lenses"
     value: string; // e.g., "Travel", "Collaboration", "Fujifilm X-T4"
     order?: number;
@@ -66,4 +69,9 @@ export class Album {
   };
 }
 
-export const AlbumSchema = SchemaFactory.createForClass(Album); 
+export const AlbumSchema = SchemaFactory.createForClass(Album);
+
+// Add indexes for better query performance
+AlbumSchema.index({ userId: 1 });
+AlbumSchema.index({ tags: 1 });
+AlbumSchema.index({ createdAt: -1 }); 

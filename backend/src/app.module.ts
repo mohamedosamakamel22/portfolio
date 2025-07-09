@@ -18,6 +18,7 @@ import { CommonModule } from './common/common.module';
 import { DatabaseIndexesService } from './database/database-indexes.service';
 import { MediaModule } from './media/media.module';
 import { LogsModule } from './logs/logs.module';
+import { StatisticsModule } from './statistics/statistics.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { LogsModule } from './logs/logs.module';
     CommonModule,
     SeedModule,
     MediaModule,
+    StatisticsModule,
   ],
   controllers: [AppController],
   providers: [AppService, DatabaseIndexesService],

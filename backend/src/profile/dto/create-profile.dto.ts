@@ -2,6 +2,9 @@ import { IsString, IsEmail, IsOptional, IsBoolean, IsNumber, IsArray, ValidateNe
 import { Type, Transform } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
+// Type for icons that can be either string or object with type and value
+export type IconType = string | { type: string; value: string };
+
 // Custom validator for string or number
 function IsStringOrNumber(validationOptions?: ValidationOptions) {
   return function (object: Object, propertyName: string) {
@@ -572,10 +575,10 @@ class GearItemDto {
 
   @ApiProperty({ 
     example: 'fas fa-camera',
-    description: 'Gear item icon (FontAwesome class)'
+    description: 'Gear item icon (FontAwesome class) - can be string or object with type and value'
   })
-  @IsString()
-  icon: string;
+  @IsOptional()
+  icon: IconType;
 
   @ApiProperty({ 
     example: 1,
@@ -786,10 +789,10 @@ class IAboutDto {
 class SocialMediaItemDto {
   @ApiProperty({ 
     example: 'fab fa-instagram',
-    description: 'Social media icon class or URL'
+    description: 'Social media icon class or URL - can be string or object with type and value'
   })
-  @IsString()
-  icon: string;
+  @IsOptional()
+  icon: IconType;
 
   @ApiProperty({ 
     example: 'https://instagram.com/saeedsekka',

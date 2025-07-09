@@ -3,6 +3,9 @@ import { Document, Schema as MongooseSchema } from 'mongoose';
 
 export type ProfileDocument = Profile & Document;
 
+// Type for icons that can be either string or object with type and value
+export type IconType = string | { type: string; value: string };
+
 // Interface for hero section
 export interface HeroSection {
     firstName: string;
@@ -41,7 +44,7 @@ export interface ISocialMedia {
     socialMedia: SocialMedia[];
 }
 export interface SocialMedia {
-    icon: string;
+    icon: IconType;
     url: string;
     title: string;
     order: number;
@@ -104,7 +107,7 @@ export interface MoreAboutMe {
 // Interface for brands worked with
 export interface BrandWorkedWith {
     name: string;
-    icon: string;
+    icon: IconType;
     url?: string;
     order?: number;
 }
@@ -112,7 +115,7 @@ export interface BrandWorkedWith {
 // Interface for gear items
 export interface GearItem {
     title: string;
-    icon: string;
+    icon: IconType;
     order: number;
     isActive?: boolean;
 
@@ -131,7 +134,7 @@ export interface Gear {
 export interface ClientBenefit {
     title: string;
     description: string;
-    icon?: string;
+    icon?: IconType;
     order?: number;
 }
 
@@ -141,14 +144,14 @@ export interface BookSessionButton {
     url: string;
     enabled: boolean;
     style?: string;
-    icon?: string;
+    icon?: IconType;
 }
 
 // Interface for work approach
 export interface WorkApproach {
     title: string;
     description: string;
-    icon?: string;
+    icon?: IconType;
     order?: number;
 }
 
@@ -277,4 +280,8 @@ export class Profile {
     ctaButtons: CTAButtons;
 }
 
-export const ProfileSchema = SchemaFactory.createForClass(Profile); 
+export const ProfileSchema = SchemaFactory.createForClass(Profile);
+
+// Add indexes for better query performance
+ProfileSchema.index({ userId: 1 });
+ProfileSchema.index({ createdAt: -1 }); 

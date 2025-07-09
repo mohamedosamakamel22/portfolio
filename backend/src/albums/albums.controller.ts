@@ -38,7 +38,7 @@ export class AlbumsController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @ApiBearerAuth()
   create(@Body() createAlbumDto: CreateAlbumDto, @CurrentUser() user: any) {
-    return this.albumsService.create(createAlbumDto, user.userId);
+    return this.albumsService.create(createAlbumDto, user.createdBy);
   }
   @Get('filter-by-tags')
   findByTags(@Query() filterByTagDto: FilterByTagDto) {

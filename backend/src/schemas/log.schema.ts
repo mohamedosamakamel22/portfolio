@@ -43,4 +43,11 @@ export class Log {
   timestamp: Date;
 }
 
-export const LogSchema = SchemaFactory.createForClass(Log); 
+export const LogSchema = SchemaFactory.createForClass(Log);
+
+// Add indexes for better query performance
+LogSchema.index({ userId: 1 });
+LogSchema.index({ module: 1 });
+LogSchema.index({ action: 1 });
+LogSchema.index({ entityId: 1 });
+LogSchema.index({ timestamp: -1 }); 

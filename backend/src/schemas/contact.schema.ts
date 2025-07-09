@@ -75,4 +75,11 @@ export class Contact {
   isArchived: boolean;
 }
 
-export const ContactSchema = SchemaFactory.createForClass(Contact); 
+export const ContactSchema = SchemaFactory.createForClass(Contact);
+
+// Add indexes for better query performance
+ContactSchema.index({ clientUserId: 1 });
+ContactSchema.index({ contactingUser: 1 });
+ContactSchema.index({ status: 1 });
+ContactSchema.index({ type: 1 });
+ContactSchema.index({ createdAt: -1 }); 

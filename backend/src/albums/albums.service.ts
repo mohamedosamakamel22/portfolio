@@ -23,7 +23,7 @@ export class AlbumsService {
 
     const albumData = {
       ...createAlbumDto,
-      createdBy: finalUserId,
+      userId: finalUserId,
     };
     
     const createdAlbum = new this.albumModel(albumData);
@@ -33,7 +33,7 @@ export class AlbumsService {
   async findAll(): Promise<Album[]> {
     return this.albumModel
       .find()
-      .populate('createdBy', 'firstName lastName email profileImage')
+      .populate('userId', 'firstName lastName email profileImage')
       .sort({ createdAt: -1 })
       .exec();
   }
@@ -41,7 +41,7 @@ export class AlbumsService {
   async findOne(id: string): Promise<Album> {
     const album = await this.albumModel
       .findById(id)
-      .populate('createdBy', 'firstName lastName email profileImage')
+      .populate('userId', 'firstName lastName email profileImage')
       .exec();
     if (!album) {
       throw new NotFoundException(`Album with ID ${id} not found`);
@@ -51,13 +51,13 @@ export class AlbumsService {
 
   async update(id: string, updateAlbumDto: UpdateAlbumDto): Promise<Album> {
     // Validate user ID if being updated
-    // if (updateAlbumDto.createdBy) {
-    //   await this.userValidationService.validateUserExists(updateAlbumDto.createdBy, 'Album creator');
+    // if (updateAlbumDto.userId) {
+    //   await this.userValidationService.validateUserExists(updateAlbumDto.userId, 'Album creator');
     // }
 
     const updatedAlbum = await this.albumModel
       .findByIdAndUpdate(id, updateAlbumDto, { new: true })
-      .populate('createdBy', 'firstName lastName email profileImage')
+      .populate('userId', 'firstName lastName email profileImage')
       .exec();
     
     if (!updatedAlbum) {
@@ -76,7 +76,7 @@ export class AlbumsService {
   async findByTags(tags: string[]): Promise<Album[]> {
     return this.albumModel
       .find({ tags: { $in: tags } })
-      .populate('createdBy', 'firstName lastName email profileImage')
+      .populate('userId', 'firstName lastName email profileImage')
       .sort({ createdAt: -1 })
       .exec();
   }
@@ -132,7 +132,7 @@ export class AlbumsService {
           { 'youtubeVideo.description': { $regex: query, $options: 'i' } },
         ],
       })
-      .populate('createdBy', 'firstName lastName email profileImage')
+      .populate('userId', 'firstName lastName email profileImage')
       .sort({ createdAt: -1 })
       .exec();
   }
