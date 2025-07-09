@@ -202,7 +202,7 @@ export class CreateAlbumDto {
   })
   @IsOptional()
   @IsString()
-  @IsUrl()
+  // @IsUrl()
   youtubeVideo?: string;
 
 
