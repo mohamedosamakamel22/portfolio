@@ -20,6 +20,7 @@ import { MediaModule } from './media/media.module';
 import { LogsModule } from './logs/logs.module';
 import { StatisticsModule } from './statistics/statistics.module';
 import { AgentsModule } from './agents/agents.module';
+import { IpAddressModule } from './ip-address/ip-address.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { AgentsModule } from './agents/agents.module';
     MediaModule,
     StatisticsModule,
     AgentsModule,
+    IpAddressModule,
   ],
   controllers: [AppController],
   providers: [AppService, DatabaseIndexesService],
