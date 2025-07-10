@@ -19,6 +19,7 @@ import { DatabaseIndexesService } from './database/database-indexes.service';
 import { MediaModule } from './media/media.module';
 import { LogsModule } from './logs/logs.module';
 import { StatisticsModule } from './statistics/statistics.module';
+import { AgentsModule } from './agents/agents.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { StatisticsModule } from './statistics/statistics.module';
     SeedModule,
     MediaModule,
     StatisticsModule,
+    AgentsModule,
   ],
   controllers: [AppController],
   providers: [AppService, DatabaseIndexesService],
