@@ -29,14 +29,14 @@ export class UpdateHeroDto {
   @IsString()
   phone?: string;
 
-  @ApiProperty({ 
-    example: 'saeed@example.com',
-    description: 'Email address',
-    required: false
-  })
-  @IsOptional()
-  @IsString()
-  email?: string;
+  // @ApiProperty({ 
+  //   example: 'saeed@example.com',
+  //   description: 'Email address',
+  //   required: false
+  // })
+  // @IsOptional()
+  // @IsString()
+  // email?: string;
 
   @ApiProperty({ 
     example: 'Riyadh, Saudi Arabia',
