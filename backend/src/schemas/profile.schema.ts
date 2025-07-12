@@ -225,6 +225,8 @@ export interface IAbout {
     endingText: string;
     images: string[];
     isActive: boolean;
+    firstName?: string;
+    lastName?: string;
     button: {
         text: string;
         url: string;

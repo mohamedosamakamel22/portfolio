@@ -772,6 +772,24 @@ class IAboutDto {
   @IsBoolean()
   isActive: boolean;
 
+  @ApiProperty({ 
+    example: 'John',
+    description: 'First name',
+    required: false
+  })
+  @IsOptional()
+  @IsString()
+  firstName?: string;
+
+  @ApiProperty({ 
+    example: 'Doe',
+    description: 'Last name',
+    required: false
+  })
+  @IsOptional()
+  @IsString()
+  lastName?: string;
+
   @ApiProperty({
     example: {
       text: 'Learn More',
