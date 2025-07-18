@@ -22,4 +22,13 @@ export class CreateReportDto {
   @ApiProperty({ example: 'I would like to report an issue with...', description: 'The message content of the report' })
   @IsString()
   message: string;
+
+  @ApiProperty({ 
+    example: 'https://res.cloudinary.com/example/image/upload/v1234567890/reports/file.pdf',
+    description: 'URL of the uploaded file (optional)',
+    required: false 
+  })
+  @IsOptional()
+  @IsString()
+  file?: string;
 } 

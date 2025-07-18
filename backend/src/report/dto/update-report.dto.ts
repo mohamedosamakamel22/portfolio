@@ -21,4 +21,13 @@ export class UpdateReportDto {
   @IsOptional()
   @IsString()
   message?: string;
+
+  @ApiProperty({ 
+    example: 'https://res.cloudinary.com/example/image/upload/v1234567890/reports/file.pdf',
+    description: 'URL of the uploaded file (optional)',
+    required: false 
+  })
+  @IsOptional()
+  @IsString()
+  file?: string;
 } 

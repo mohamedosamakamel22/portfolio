@@ -35,6 +35,9 @@ export class Report {
   @Prop({ required: true })
   message: string;
 
+  @Prop({ required: false })
+  file?: string;
+
 }
 
 export const ReportSchema = SchemaFactory.createForClass(Report);

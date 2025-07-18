@@ -5,6 +5,7 @@ import { ReportController } from './report.controller';
 import { Report, ReportSchema } from '../schemas/report.schema';
 import { CommonModule } from '../common/common.module';
 import { LogsModule } from '../logs/logs.module';
+import { CloudinaryModule } from '../cloudinary/cloudinary.module';
 
 @Module({
   imports: [
