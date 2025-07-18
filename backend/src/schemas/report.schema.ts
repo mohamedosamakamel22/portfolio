@@ -36,7 +36,7 @@ export class Report {
   message: string;
 
   @Prop({ required: false })
-  file?: string;
+  files?: string[];
 
 }
 

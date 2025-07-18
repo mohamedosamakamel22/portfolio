@@ -1,4 +1,4 @@
-import { IsString, IsEmail, IsOptional } from 'class-validator';
+import { IsString, IsEmail, IsOptional, IsArray } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateReportDto {
@@ -23,12 +23,12 @@ export class CreateReportDto {
   @IsString()
   message: string;
 
-  @ApiProperty({ 
-    example: 'https://res.cloudinary.com/example/image/upload/v1234567890/reports/file.pdf',
+  @ApiProperty({
+    example: ['https://res.cloudinary.com/example/image/upload/v1234567890/reports/file.pdf', 'https://res.cloudinary.com/example/image/upload/v1234567890/reports/file.pdf'],
     description: 'URL of the uploaded file (optional)',
-    required: false 
+    required: false
   })
   @IsOptional()
-  @IsString()
-  file?: string;
+  @IsArray()
+  files?: string[];
 } 

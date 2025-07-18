@@ -1,4 +1,4 @@
-import { IsString, IsEmail, IsOptional } from 'class-validator';
+import { IsString, IsEmail, IsOptional, IsArray } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateReportDto {
@@ -28,6 +28,6 @@ export class UpdateReportDto {
     required: false 
   })
   @IsOptional()
-  @IsString()
-  file?: string;
+  @IsArray()
+  file?: string[];
 } 

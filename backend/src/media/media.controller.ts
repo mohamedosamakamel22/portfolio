@@ -12,7 +12,7 @@ export class MediaController {
   @Post('upload')
   @ApiOperation({
     summary: 'Upload a single file',
-    description: 'Upload a single image or video file to Cloudinary and get back the URL',
+    description: 'Upload a single file of any type to Cloudinary and get back the URL',
   })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
@@ -23,12 +23,12 @@ export class MediaController {
         file: {
           type: 'string',
           format: 'binary',
-          description: 'The file to upload (image or video)',
+          description: 'The file to upload (any file type)',
         },
         folder: {
           type: 'string',
-          description: 'Optional Cloudinary folder path (e.g., "portfolio/images")',
-          example: 'portfolio/images',
+          description: 'Optional Cloudinary folder path (e.g., "portfolio/files")',
+          example: 'portfolio/files',
         },
       },
       required: ['file'],
@@ -57,13 +57,7 @@ export class MediaController {
   @UseInterceptors(
     FileInterceptor('file', {
       limits: {
-        fileSize: 100 * 1024 * 1024, // 50MB - increased from 10MB
-      },
-      fileFilter: (req, file, callback) => {
-        if (!file.mimetype.match(/^(image|video)/)) {
-          return callback(new BadRequestException('Only image and video files are allowed'), false);
-        }
-        callback(null, true);
+        fileSize: 100 * 1024 * 1024, // 100MB
       },
     }),
   )
@@ -86,40 +80,40 @@ export class MediaController {
     }
   }
 
-  @Post('upload/large-image')
+  @Post('upload/large-file')
   @ApiOperation({
-    summary: 'Upload a large image with enhanced optimization',
-    description: 'Upload a large image file (up to 100MB) with automatic compression and optimization',
+    summary: 'Upload a large file with enhanced optimization',
+    description: 'Upload a large file (up to 100MB) with automatic compression and optimization',
   })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
-    description: 'Large image file upload with optional folder parameter',
+    description: 'Large file upload with optional folder parameter',
     schema: {
       type: 'object',
       properties: {
         file: {
           type: 'string',
           format: 'binary',
-          description: 'The large image file to upload (up to 100MB)',
+          description: 'The large file to upload (up to 100MB)',
         },
         folder: {
           type: 'string',
-          description: 'Optional Cloudinary folder path (e.g., "portfolio/high-res")',
-          example: 'portfolio/high-res',
+          description: 'Optional Cloudinary folder path (e.g., "portfolio/large-files")',
+          example: 'portfolio/large-files',
         },
         quality: {
           type: 'string',
-          description: 'Image quality (auto, best, good, eco, low)',
+          description: 'File quality (auto, best, good, eco, low) - for images only',
           example: 'auto',
         },
         maxWidth: {
           type: 'number',
-          description: 'Maximum width in pixels (default: 4000)',
+          description: 'Maximum width in pixels (default: 4000) - for images only',
           example: 4000,
         },
         maxHeight: {
           type: 'number',
-          description: 'Maximum height in pixels (default: 4000)',
+          description: 'Maximum height in pixels (default: 4000) - for images only',
           example: 4000,
         },
       },
@@ -128,7 +122,7 @@ export class MediaController {
   })
   @ApiResponse({
     status: 201,
-    description: 'Large image uploaded successfully',
+    description: 'Large file uploaded successfully',
     schema: {
       type: 'object',
       properties: {
@@ -157,17 +151,11 @@ export class MediaController {
   @UseInterceptors(
     FileInterceptor('file', {
       limits: {
-        fileSize: 100 * 1024 * 1024, // 100MB for large images
-      },
-      fileFilter: (req, file, callback) => {
-        if (!file.mimetype.match(/^image/)) {
-          return callback(new BadRequestException('Only image files are allowed'), false);
-        }
-        callback(null, true);
+        fileSize: 100 * 1024 * 1024, // 100MB for large files
       },
     }),
   )
-  async uploadLargeImage(
+  async uploadLargeFile(
     @UploadedFile() file: Express.Multer.File,
     @Body('folder') folder?: string,
     @Body('quality') quality?: string,
@@ -180,7 +168,7 @@ export class MediaController {
 
     try {
       const result = await this.cloudinaryService.uploadLargeImage(file, {
-        folder: folder || 'portfolio/high-res',
+        folder: folder || 'portfolio/large-files',
         quality: quality || 'auto',
         maxWidth: maxWidth || 4000,
         maxHeight: maxHeight || 4000,
@@ -193,18 +181,18 @@ export class MediaController {
         optimizedSize: result.bytes,
       };
     } catch (error) {
-      throw new BadRequestException('Failed to upload large image: ' + error.message);
+      throw new BadRequestException('Failed to upload large file: ' + error.message);
     }
   }
 
   @Post('upload/multiple')
   @ApiOperation({
-    summary: 'Upload multiple image files',
-    description: 'Upload multiple image files to Cloudinary and get back their URLs',
+    summary: 'Upload multiple files',
+    description: 'Upload multiple files of any type to Cloudinary and get back their URLs',
   })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
-    description: 'Multiple image files upload with optional folder parameter',
+    description: 'Multiple files upload with optional folder parameter',
     schema: {
       type: 'object',
       properties: {
@@ -214,12 +202,12 @@ export class MediaController {
             type: 'string',
             format: 'binary',
           },
-          description: 'Array of image files to upload (max 10 files)',
+          description: 'Array of files to upload (any file type, max 10 files)',
         },
         folder: {
           type: 'string',
-          description: 'Optional Cloudinary folder path (e.g., "portfolio/gallery")',
-          example: 'portfolio/gallery',
+          description: 'Optional Cloudinary folder path (e.g., "portfolio/files")',
+          example: 'portfolio/files',
         },
       },
       required: ['files'],
@@ -251,13 +239,7 @@ export class MediaController {
   @UseInterceptors(
     FilesInterceptor('files', 10, {
       limits: {
-        fileSize: 100 * 1024 * 1024, // 50MB per file - increased from 10MB
-      },
-      fileFilter: (req, file, callback) => {
-        if (!file.mimetype.match(/^image/)) {
-          return callback(new BadRequestException('Only image files are allowed'), false);
-        }
-        callback(null, true);
+        fileSize: 100 * 1024 * 1024, // 100MB per file
       },
     }),
   )
@@ -282,12 +264,12 @@ export class MediaController {
 
   @Post('upload/mixed')
   @ApiOperation({
-    summary: 'Upload mixed media files',
-    description: 'Upload multiple files (images and videos) to Cloudinary and get back their URLs',
+    summary: 'Upload mixed files',
+    description: 'Upload multiple files of any type to Cloudinary and get back their URLs',
   })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
-    description: 'Mixed media files upload with optional folder parameter',
+    description: 'Mixed files upload with optional folder parameter',
     schema: {
       type: 'object',
       properties: {
@@ -297,12 +279,12 @@ export class MediaController {
             type: 'string',
             format: 'binary',
           },
-          description: 'Array of files to upload (images and videos, max 10 files)',
+          description: 'Array of files to upload (any file type, max 10 files)',
         },
         folder: {
           type: 'string',
-          description: 'Optional Cloudinary folder path (e.g., "portfolio/media")',
-          example: 'portfolio/media',
+          description: 'Optional Cloudinary folder path (e.g., "portfolio/files")',
+          example: 'portfolio/files',
         },
       },
       required: ['files'],
@@ -334,13 +316,7 @@ export class MediaController {
   @UseInterceptors(
     FilesInterceptor('files', 10, {
       limits: {
-        fileSize: 100 * 1024 * 1024, // 50MB per file - increased from 10MB
-      },
-      fileFilter: (req, file, callback) => {
-        if (!file.mimetype.match(/^(image|video)/)) {
-          return callback(new BadRequestException('Only image and video files are allowed'), false);
-        }
-        callback(null, true);
+        fileSize: 100 * 1024 * 1024, // 100MB per file
       },
     }),
   )
