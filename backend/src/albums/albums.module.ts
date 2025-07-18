@@ -4,7 +4,7 @@ import { MulterModule } from '@nestjs/platform-express';
 import { AlbumsService } from './albums.service';
 import { AlbumsController } from './albums.controller';
 import { Album, AlbumSchema } from '../schemas/album.schema';
-import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import { DigitalOceanSpacesService } from '../digitalocean-spaces/digitalocean-spaces.service';
 import { CommonModule } from '../common/common.module';
 
 @Module({
@@ -18,7 +18,7 @@ import { CommonModule } from '../common/common.module';
     CommonModule,
   ],
   controllers: [AlbumsController],
-  providers: [AlbumsService, CloudinaryService],
+  providers: [AlbumsService, DigitalOceanSpacesService],
   exports: [AlbumsService],
 })
 export class AlbumsModule {} 

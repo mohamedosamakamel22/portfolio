@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { CloudinaryModule } from '../cloudinary/cloudinary.module';
+import { DigitalOceanSpacesModule } from '../digitalocean-spaces/digitalocean-spaces.module';
 import { MediaController } from './media.controller';
 
 @Module({
-  imports: [CloudinaryModule],
+  imports: [DigitalOceanSpacesModule],
   controllers: [MediaController],
 })
 export class MediaModule {} 

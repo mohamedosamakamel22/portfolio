@@ -14,7 +14,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags, ApiBearerAuth, ApiProperty, ApiConsumes, ApiOperation, ApiParam, ApiBody, ApiResponse } from '@nestjs/swagger';
 import { ProfileService } from './profile.service';
-import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import { DigitalOceanSpacesService } from '../digitalocean-spaces/digitalocean-spaces.service';
 import { CreateProfileDto, ProfileResponseDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { UpdateStatsDto } from './dto/update-stats.dto';
@@ -30,7 +30,7 @@ import { UserRole } from '../schemas/user.schema';
 export class ProfileController {
   constructor(
     private readonly profileService: ProfileService,
-    private readonly cloudinaryService: CloudinaryService,
+    private readonly digitalOceanSpacesService: DigitalOceanSpacesService,
   ) {}
 
   @Post()
@@ -436,20 +436,20 @@ export class ProfileController {
     }
 
     try {
-      const result = await this.cloudinaryService.uploadImage(file, 'profile');
+      const result = await this.digitalOceanSpacesService.uploadImage(file, 'profile');
       
       // Get the current profile
       const profile = await this.profileService.findOne(id);
       
       // Update the profile image in the hero section
       if (profile.hero) {
-        profile.hero.profileImage = result.secure_url;
+        profile.hero.profileImage = result.url;
         await profile.save();
       }
 
       return {
         message: 'Profile image uploaded successfully',
-        imageUrl: result.secure_url,
+        imageUrl: result.url,
         profile: profile,
       };
     } catch (error) {

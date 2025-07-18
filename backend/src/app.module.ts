@@ -8,7 +8,7 @@ import { AppService } from './app.service';
 import { ProfileModule } from './profile/profile.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { AlbumsModule } from './albums/albums.module';
-import { CloudinaryModule } from './cloudinary/cloudinary.module';
+import { DigitalOceanSpacesModule } from './digitalocean-spaces/digitalocean-spaces.module';
 import { SeedModule } from './seed/seed.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
@@ -37,7 +37,7 @@ import { IpAddressModule } from './ip-address/ip-address.module';
     ContactModule,
     ReportModule,
     LogsModule,
-    CloudinaryModule,
+    DigitalOceanSpacesModule,
     // WebsiteModule,
     CommonModule,
     SeedModule,

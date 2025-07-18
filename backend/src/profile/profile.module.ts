@@ -5,7 +5,7 @@ import { ProfileController } from './profile.controller';
 import { ProfileObjectsController } from './profile-objects.controller';
 import { ProfileUpdateObjectsController } from './profile-update-objects.controller';
 import { Profile, ProfileSchema } from '../schemas/profile.schema';
-import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import { DigitalOceanSpacesService } from '../digitalocean-spaces/digitalocean-spaces.service';
 import { CommonModule } from '../common/common.module';
 
 @Module({
@@ -14,7 +14,7 @@ import { CommonModule } from '../common/common.module';
     CommonModule,
   ],
   controllers: [ProfileController, ProfileObjectsController, ProfileUpdateObjectsController],
-  providers: [ProfileService, CloudinaryService],
+  providers: [ProfileService, DigitalOceanSpacesService],
   exports: [ProfileService],
 })
 export class ProfileModule {} 

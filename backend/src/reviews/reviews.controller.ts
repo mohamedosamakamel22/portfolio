@@ -16,7 +16,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags, ApiBearerAuth, ApiQuery, ApiResponse, ApiParam } from '@nestjs/swagger';
 import { ReviewsService } from './reviews.service';
-import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import { DigitalOceanSpacesService } from '../digitalocean-spaces/digitalocean-spaces.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -31,7 +31,7 @@ import { Review } from 'src/schemas/review.schema';
 export class ReviewsController {
   constructor(
     private readonly reviewsService: ReviewsService,
-    private readonly cloudinaryService: CloudinaryService,
+    private readonly digitalOceanSpacesService: DigitalOceanSpacesService,
   ) { }
 
   @Post()

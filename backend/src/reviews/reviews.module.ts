@@ -3,7 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ReviewsService } from './reviews.service';
 import { ReviewsController } from './reviews.controller';
 import { Review, ReviewSchema } from '../schemas/review.schema';
-import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import { DigitalOceanSpacesService } from '../digitalocean-spaces/digitalocean-spaces.service';
 import { CommonModule } from '../common/common.module';
 
 @Module({
@@ -14,7 +14,7 @@ import { CommonModule } from '../common/common.module';
     CommonModule,
   ],
   controllers: [ReviewsController],
-  providers: [ReviewsService, CloudinaryService],
+  providers: [ReviewsService, DigitalOceanSpacesService],
   exports: [ReviewsService],
 })
 export class ReviewsModule {} 

@@ -102,7 +102,7 @@ async function bootstrap() {
   logger.log(`📚 Swagger Documentation: http://localhost:${port}/api/docs`);
   logger.log(`📧 Default Admin: admin@portfolio.com / admin123`);
   logger.log(`🌍 MongoDB: ${process.env.MONGODB_URI?.includes('cluster0') ? 'Connected to Cloud Atlas' : 'Local/Custom'}`);
-  logger.log(`☁️  Cloudinary: ${process.env.CLOUDINARY_URL?.includes('egyptismycountry') ? 'Connected' : 'Custom'}`);
+      logger.log(`🌊  Digital Ocean Spaces: ${process.env.DO_SPACES_BUCKET ? 'Connected' : 'Not configured'}`);
   logger.log('🔧 Performance Optimizations:');
   logger.log('   ✅ Compression enabled');
   logger.log('   ✅ Security headers (helmet)');

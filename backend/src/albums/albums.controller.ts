@@ -16,7 +16,7 @@ import {
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { ApiTags, ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
 import { AlbumsService } from './albums.service';
-import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import { DigitalOceanSpacesService } from '../digitalocean-spaces/digitalocean-spaces.service';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -31,7 +31,7 @@ import { FilterByTagDto } from './dto/filter-by-tag.dto';
 export class AlbumsController {
   constructor(
     private readonly albumsService: AlbumsService,
-    private readonly cloudinaryService: CloudinaryService,
+    private readonly digitalOceanSpacesService: DigitalOceanSpacesService,
   ) { }
 
   @Post()

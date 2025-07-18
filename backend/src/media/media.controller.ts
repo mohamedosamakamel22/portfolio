@@ -1,18 +1,18 @@
 import { Controller, Post, UseInterceptors, UploadedFile, UploadedFiles, Body, BadRequestException, Param } from '@nestjs/common';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import { DigitalOceanSpacesService } from '../digitalocean-spaces/digitalocean-spaces.service';
 import { ApiTags, ApiConsumes, ApiOperation, ApiResponse, ApiBody, ApiParam } from '@nestjs/swagger';
 import { diskStorage } from 'multer';
 
 @ApiTags('Media Upload')
 @Controller('media')
 export class MediaController {
-  constructor(private readonly cloudinaryService: CloudinaryService) {}
+  constructor(private readonly digitalOceanSpacesService: DigitalOceanSpacesService) {}
 
   @Post('upload')
   @ApiOperation({
     summary: 'Upload a single file',
-    description: 'Upload a single file of any type to Cloudinary and get back the URL',
+    description: 'Upload a single file of any type to Digital Ocean Spaces and get back the URL',
   })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
@@ -27,7 +27,7 @@ export class MediaController {
         },
         folder: {
           type: 'string',
-          description: 'Optional Cloudinary folder path (e.g., "portfolio/files")',
+          description: 'Optional Digital Ocean Spaces folder path (e.g., "portfolio/files")',
           example: 'portfolio/files',
         },
       },
@@ -70,10 +70,10 @@ export class MediaController {
     }
 
     try {
-      const result = await this.cloudinaryService.uploadImage(file, folder);
+      const result = await this.digitalOceanSpacesService.uploadImage(file, folder);
       return {
-        url: result.secure_url,
-        publicId: result.public_id,
+        url: result.url,
+        publicId: result.publicId,
       };
     } catch (error) {
       throw new BadRequestException('Failed to upload file: ' + error.message);
@@ -83,7 +83,7 @@ export class MediaController {
   @Post('upload/large-file')
   @ApiOperation({
     summary: 'Upload a large file with enhanced optimization',
-    description: 'Upload a large file (up to 100MB) with automatic compression and optimization',
+    description: 'Upload a large file (up to 100MB) to Digital Ocean Spaces with metadata tracking',
   })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
@@ -98,7 +98,7 @@ export class MediaController {
         },
         folder: {
           type: 'string',
-          description: 'Optional Cloudinary folder path (e.g., "portfolio/large-files")',
+          description: 'Optional Digital Ocean Spaces folder path (e.g., "portfolio/large-files")',
           example: 'portfolio/large-files',
         },
         quality: {
@@ -167,7 +167,7 @@ export class MediaController {
     }
 
     try {
-      const result = await this.cloudinaryService.uploadLargeImage(file, {
+      const result = await this.digitalOceanSpacesService.uploadLargeImage(file, {
         folder: folder || 'portfolio/large-files',
         quality: quality || 'auto',
         maxWidth: maxWidth || 4000,
@@ -175,8 +175,8 @@ export class MediaController {
       });
       
       return {
-        url: result.secure_url,
-        publicId: result.public_id,
+        url: result.url,
+        publicId: result.publicId,
         originalSize: file.size,
         optimizedSize: result.bytes,
       };
@@ -188,7 +188,7 @@ export class MediaController {
   @Post('upload/multiple')
   @ApiOperation({
     summary: 'Upload multiple files',
-    description: 'Upload multiple files of any type to Cloudinary and get back their URLs',
+    description: 'Upload multiple files of any type to Digital Ocean Spaces and get back their URLs',
   })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
@@ -206,7 +206,7 @@ export class MediaController {
         },
         folder: {
           type: 'string',
-          description: 'Optional Cloudinary folder path (e.g., "portfolio/files")',
+          description: 'Optional Digital Ocean Spaces folder path (e.g., "portfolio/files")',
           example: 'portfolio/files',
         },
       },
@@ -252,10 +252,10 @@ export class MediaController {
     }
 
     try {
-      const results = await this.cloudinaryService.uploadMultipleImages(files, folder);
+      const results = await this.digitalOceanSpacesService.uploadMultipleImages(files, folder);
       return results.map(result => ({
-        url: result.secure_url,
-        publicId: result.public_id,
+        url: result.url,
+        publicId: result.publicId,
       }));
     } catch (error) {
       throw new BadRequestException('Failed to upload files: ' + error.message);
@@ -265,7 +265,7 @@ export class MediaController {
   @Post('upload/mixed')
   @ApiOperation({
     summary: 'Upload mixed files',
-    description: 'Upload multiple files of any type to Cloudinary and get back their URLs',
+    description: 'Upload multiple files of any type to Digital Ocean Spaces and get back their URLs',
   })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
@@ -279,11 +279,11 @@ export class MediaController {
             type: 'string',
             format: 'binary',
           },
-          description: 'Array of files to upload (any file type, max 10 files)',
+          description: 'Array of files to upload (any file type, max 100MB per file)',
         },
         folder: {
           type: 'string',
-          description: 'Optional Cloudinary folder path (e.g., "portfolio/files")',
+          description: 'Optional Digital Ocean Spaces folder path (e.g., "portfolio/files")',
           example: 'portfolio/files',
         },
       },
@@ -329,10 +329,10 @@ export class MediaController {
     }
 
     try {
-      const results = await this.cloudinaryService.uploadMixedMedia(files, folder);
+      const results = await this.digitalOceanSpacesService.uploadMixedMedia(files, folder);
       return results.map(result => ({
-        url: result.secure_url,
-        publicId: result.public_id,
+        url: result.url,
+        publicId: result.publicId,
       }));
     } catch (error) {
       throw new BadRequestException('Failed to upload files: ' + error.message);
