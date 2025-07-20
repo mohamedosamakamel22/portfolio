@@ -1,5 +1,22 @@
-import { IsString, IsEmail, IsOptional, IsArray } from 'class-validator';
+import { IsString, IsEmail, IsOptional, IsArray, ValidateNested, IsUrl } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+
+export class ReportFileDto {
+  @ApiProperty({ 
+    example: 'https://res.cloudinary.com/example/image/upload/v1234567890/reports/document.pdf',
+    description: 'URL of the uploaded file'
+  })
+  @IsUrl()
+  url: string;
+
+  @ApiProperty({ 
+    example: 'document.pdf',
+    description: 'Original filename of the uploaded file'
+  })
+  @IsString()
+  filename: string;
+}
 
 export class UpdateReportDto {
   @ApiProperty({ example: 'John Doe', description: 'Full name of the person submitting the report', required: false })
@@ -22,12 +39,24 @@ export class UpdateReportDto {
   @IsString()
   message?: string;
 
-  @ApiProperty({ 
-    example: 'https://res.cloudinary.com/example/image/upload/v1234567890/reports/file.pdf',
-    description: 'URL of the uploaded file (optional)',
-    required: false 
+  @ApiProperty({
+    example: [
+      {
+        url: 'https://res.cloudinary.com/example/image/upload/v1234567890/reports/document.pdf',
+        filename: 'document.pdf'
+      },
+      {
+        url: 'https://res.cloudinary.com/example/image/upload/v1234567890/reports/screenshot.png',
+        filename: 'screenshot.png'
+      }
+    ],
+    description: 'Array of uploaded files with URLs and filenames (optional)',
+    required: false,
+    type: [ReportFileDto]
   })
   @IsOptional()
   @IsArray()
-  file?: string[];
+  @ValidateNested({ each: true })
+  @Type(() => ReportFileDto)
+  files?: ReportFileDto[];
 } 

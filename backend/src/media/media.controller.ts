@@ -16,7 +16,7 @@ export class MediaController {
   })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
-    description: 'File upload with optional folder parameter',
+    description: 'File upload with optional folder and naming parameters',
     schema: {
       type: 'object',
       properties: {
@@ -30,6 +30,16 @@ export class MediaController {
           description: 'Optional Digital Ocean Spaces folder path (e.g., "portfolio/files")',
           example: 'portfolio/files',
         },
+        preserveOriginalName: {
+          type: 'boolean',
+          description: 'Whether to preserve original filename (default: true)',
+          example: true,
+        },
+        preventOverwrite: {
+          type: 'boolean',
+          description: 'Whether to prevent overwriting existing files (default: true)',
+          example: true,
+        },
       },
       required: ['file'],
     },
@@ -42,13 +52,18 @@ export class MediaController {
       properties: {
         url: {
           type: 'string',
-          description: 'The Cloudinary URL of the uploaded file',
-          example: 'https://res.cloudinary.com/your-cloud/image/upload/v1234/folder/file.jpg',
+          description: 'The Digital Ocean Spaces URL of the uploaded file',
+          example: 'https://portfolio.sfo3.digitaloceanspaces.com/portfolio/files/صورة.png',
         },
         publicId: {
           type: 'string',
-          description: 'The Cloudinary public ID of the uploaded file',
-          example: 'folder/file',
+          description: 'The Digital Ocean Spaces key/path of the uploaded file',
+          example: 'portfolio/files/عربيpdf.pdf',
+        },
+        filename: {
+          type: 'string',
+          description: 'The original filename before any modifications',
+          example: 'عربيpdf.pdf',
         },
       },
     },
@@ -59,21 +74,53 @@ export class MediaController {
       limits: {
         fileSize: 100 * 1024 * 1024, // 100MB
       },
+      // Handle Unicode filenames properly
+      preservePath: true,
+      fileFilter: (req, file, cb) => {
+        // Fix filename encoding if needed
+        if (file.originalname) {
+          try {
+            // Try to fix potential encoding issues
+            const buffer = Buffer.from(file.originalname, 'latin1');
+            const utf8String = buffer.toString('utf8');
+            if (utf8String !== file.originalname && /[\u0080-\uFFFF]/.test(utf8String)) {
+              file.originalname = utf8String;
+            }
+          } catch (error) {
+            console.log('Could not fix filename encoding:', error.message);
+          }
+        }
+        cb(null, true);
+      },
     }),
   )
   async uploadFile(
     @UploadedFile() file: Express.Multer.File,
     @Body('folder') folder?: string,
+    @Body('preserveOriginalName') preserveOriginalName?: string,
+    @Body('preventOverwrite') preventOverwrite?: string,
   ) {
     if (!file) {
       throw new BadRequestException('No file uploaded');
     }
 
+    // Convert string to boolean (form data comes as string)
+    const shouldPreserveOriginalName = preserveOriginalName === 'false' ? false : true;
+    const shouldPreventOverwrite = preventOverwrite === 'false' ? false : true;
+
+    // Log the received filename for debugging
+    console.log('Received file:', {
+      originalname: file.originalname,
+      mimetype: file.mimetype,
+      size: file.size
+    });
+
     try {
-      const result = await this.digitalOceanSpacesService.uploadImage(file, folder);
+      const result = await this.digitalOceanSpacesService.uploadImage(file, folder, shouldPreserveOriginalName, shouldPreventOverwrite);
       return {
         url: result.url,
         publicId: result.publicId,
+        filename: result.originalFilename, // Return the original filename
       };
     } catch (error) {
       throw new BadRequestException('Failed to upload file: ' + error.message);
@@ -116,6 +163,16 @@ export class MediaController {
           description: 'Maximum height in pixels (default: 4000) - for images only',
           example: 4000,
         },
+        preserveOriginalName: {
+          type: 'boolean',
+          description: 'Whether to preserve original filename (default: true)',
+          example: true,
+        },
+        preventOverwrite: {
+          type: 'boolean',
+          description: 'Whether to prevent overwriting existing files (default: true)',
+          example: true,
+        },
       },
       required: ['file'],
     },
@@ -128,13 +185,18 @@ export class MediaController {
       properties: {
         url: {
           type: 'string',
-          description: 'The Cloudinary URL of the uploaded file',
-          example: 'https://res.cloudinary.com/your-cloud/image/upload/v1234/folder/file.jpg',
+          description: 'The Digital Ocean Spaces URL of the uploaded file',
+          example: 'https://portfolio.sfo3.digitaloceanspaces.com/portfolio/files/صورة.png',
         },
         publicId: {
           type: 'string',
-          description: 'The Cloudinary public ID of the uploaded file',
-          example: 'folder/file',
+          description: 'The Digital Ocean Spaces key/path of the uploaded file',
+          example: 'portfolio/files/عربيpdf.pdf',
+        },
+        filename: {
+          type: 'string',
+          description: 'The original filename before any modifications',
+          example: 'عربيpdf.pdf',
         },
         originalSize: {
           type: 'number',
@@ -161,10 +223,16 @@ export class MediaController {
     @Body('quality') quality?: string,
     @Body('maxWidth') maxWidth?: number,
     @Body('maxHeight') maxHeight?: number,
+    @Body('preserveOriginalName') preserveOriginalName?: string,
+    @Body('preventOverwrite') preventOverwrite?: string,
   ) {
     if (!file) {
       throw new BadRequestException('No file uploaded');
     }
+
+    // Convert string to boolean (form data comes as string)
+    const shouldPreserveOriginalName = preserveOriginalName === 'false' ? false : true;
+    const shouldPreventOverwrite = preventOverwrite === 'false' ? false : true;
 
     try {
       const result = await this.digitalOceanSpacesService.uploadLargeImage(file, {
@@ -172,11 +240,14 @@ export class MediaController {
         quality: quality || 'auto',
         maxWidth: maxWidth || 4000,
         maxHeight: maxHeight || 4000,
+        preserveOriginalName: shouldPreserveOriginalName,
+        preventOverwrite: shouldPreventOverwrite,
       });
       
       return {
         url: result.url,
         publicId: result.publicId,
+        filename: result.originalFilename, // Return the original filename
         originalSize: file.size,
         optimizedSize: result.bytes,
       };
@@ -209,6 +280,16 @@ export class MediaController {
           description: 'Optional Digital Ocean Spaces folder path (e.g., "portfolio/files")',
           example: 'portfolio/files',
         },
+        preserveOriginalName: {
+          type: 'boolean',
+          description: 'Whether to preserve original filename (default: true)',
+          example: true,
+        },
+        preventOverwrite: {
+          type: 'boolean',
+          description: 'Whether to prevent overwriting existing files (default: true)',
+          example: true,
+        },
       },
       required: ['files'],
     },
@@ -223,13 +304,18 @@ export class MediaController {
         properties: {
           url: {
             type: 'string',
-            description: 'The Cloudinary URL of the uploaded file',
-            example: 'https://res.cloudinary.com/your-cloud/image/upload/v1234/folder/file.jpg',
+            description: 'The Digital Ocean Spaces URL of the uploaded file',
+            example: 'https://portfolio.sfo3.digitaloceanspaces.com/portfolio/files/عربيpdf.pdf',
           },
           publicId: {
             type: 'string',
-            description: 'The Cloudinary public ID of the uploaded file',
-            example: 'folder/file',
+            description: 'The Digital Ocean Spaces key/path of the uploaded file',
+            example: 'portfolio/files/عربيpdf.pdf',
+          },
+          filename: {
+            type: 'string',
+            description: 'The original filename before any modifications',
+            example: 'عربيpdf.pdf',
           },
         },
       },
@@ -246,16 +332,23 @@ export class MediaController {
   async uploadMultipleFiles(
     @UploadedFiles() files: Express.Multer.File[],
     @Body('folder') folder?: string,
+    @Body('preserveOriginalName') preserveOriginalName?: string,
+    @Body('preventOverwrite') preventOverwrite?: string,
   ) {
     if (!files || files.length === 0) {
       throw new BadRequestException('No files uploaded');
     }
 
+    // Convert string to boolean (form data comes as string)
+    const shouldPreserveOriginalName = preserveOriginalName === 'false' ? false : true;
+    const shouldPreventOverwrite = preventOverwrite === 'false' ? false : true;
+
     try {
-      const results = await this.digitalOceanSpacesService.uploadMultipleImages(files, folder);
+      const results = await this.digitalOceanSpacesService.uploadMultipleImages(files, folder, shouldPreserveOriginalName, shouldPreventOverwrite);
       return results.map(result => ({
         url: result.url,
         publicId: result.publicId,
+        filename: result.originalFilename, // Return the original filename
       }));
     } catch (error) {
       throw new BadRequestException('Failed to upload files: ' + error.message);
@@ -286,6 +379,16 @@ export class MediaController {
           description: 'Optional Digital Ocean Spaces folder path (e.g., "portfolio/files")',
           example: 'portfolio/files',
         },
+        preserveOriginalName: {
+          type: 'boolean',
+          description: 'Whether to preserve original filename (default: true)',
+          example: true,
+        },
+        preventOverwrite: {
+          type: 'boolean',
+          description: 'Whether to prevent overwriting existing files (default: true)',
+          example: true,
+        },
       },
       required: ['files'],
     },
@@ -300,13 +403,18 @@ export class MediaController {
         properties: {
           url: {
             type: 'string',
-            description: 'The Cloudinary URL of the uploaded file',
-            example: 'https://res.cloudinary.com/your-cloud/image/upload/v1234/folder/file.jpg',
+            description: 'The Digital Ocean Spaces URL of the uploaded file',
+            example: 'https://portfolio.sfo3.digitaloceanspaces.com/portfolio/files/عربيpdf.pdf',
           },
           publicId: {
             type: 'string',
-            description: 'The Cloudinary public ID of the uploaded file',
-            example: 'folder/file',
+            description: 'The Digital Ocean Spaces key/path of the uploaded file',
+            example: 'portfolio/files/عربيpdf.pdf',
+          },
+          filename: {
+            type: 'string',
+            description: 'The original filename before any modifications',
+            example: 'عربيpdf.pdf',
           },
         },
       },
@@ -323,19 +431,26 @@ export class MediaController {
   async uploadMixedFiles(
     @UploadedFiles() files: Express.Multer.File[],
     @Body('folder') folder?: string,
+    @Body('preserveOriginalName') preserveOriginalName?: string,
+    @Body('preventOverwrite') preventOverwrite?: string,
   ) {
     if (!files || files.length === 0) {
       throw new BadRequestException('No files uploaded');
     }
 
+    // Convert string to boolean (form data comes as string)
+    const shouldPreserveOriginalName = preserveOriginalName === 'false' ? false : true;
+    const shouldPreventOverwrite = preventOverwrite === 'false' ? false : true;
+
     try {
-      const results = await this.digitalOceanSpacesService.uploadMixedMedia(files, folder);
+      const results = await this.digitalOceanSpacesService.uploadMixedMedia(files, folder, shouldPreserveOriginalName, shouldPreventOverwrite);
       return results.map(result => ({
         url: result.url,
         publicId: result.publicId,
+        filename: result.originalFilename, // Return the original filename
       }));
     } catch (error) {
       throw new BadRequestException('Failed to upload files: ' + error.message);
     }
   }
-} 
+}
