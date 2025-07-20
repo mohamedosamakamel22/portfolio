@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Body, HttpStatus, HttpCode } from '@nestjs/common';
+import { Controller, Post, Get, Delete, Body, HttpStatus, HttpCode } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { IpAddressService } from './ip-address.service';
 import { RecordVisitDto } from './dto/record-visit.dto';
@@ -50,5 +50,26 @@ export class IpAddressController {
     })
     async getVisitorStats() {
         return this.ipAddressService.getVisitorStats();
+    }
+
+    @Delete()
+    @HttpCode(HttpStatus.OK)
+    @ApiOperation({ 
+        summary: 'Delete all visits',
+        description: 'Deletes all IP address records and resets visit count to 0'
+    })
+    @ApiResponse({ 
+        status: 200, 
+        description: 'All visits deleted successfully',
+        schema: {
+            type: 'object',
+            properties: {
+                message: { type: 'string', description: 'Success message' },
+                deletedCount: { type: 'number', description: 'Number of records deleted' }
+            }
+        }
+    })
+    async deleteAllVisits() {
+        return this.ipAddressService.deleteAllVisits();
     }
 } 

@@ -75,5 +75,16 @@ export class IpAddressService {
         };
     }
 
+    async deleteAllVisits(): Promise<{
+        message: string;
+        deletedCount: number;
+    }> {
+        const result = await this.ipAddressModel.deleteMany({});
+        
+        return {
+            message: 'All visits have been deleted successfully',
+            deletedCount: result.deletedCount
+        };
+    }
 
 } 
